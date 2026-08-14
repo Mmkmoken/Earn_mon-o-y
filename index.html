@@ -95,6 +95,30 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
 .tasks-btn:active{transform:scale(.95)}
 .tb-tag{font-family:'Baloo 2';font-size:11px;font-weight:800;background:rgba(4,48,60,.22);padding:3px 9px;border-radius:99px}
 
+/* ---------- SHARE ---------- */
+.share-btn{width:100%;margin-top:12px;border:none;cursor:pointer;font-family:'Bungee';font-size:16px;
+  letter-spacing:1px;color:#3c0a14;background:linear-gradient(180deg,#ffb3c1,#ff5e7a 55%,#e6385c);
+  padding:16px;border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;
+  box-shadow:0 10px 26px -8px rgba(255,94,122,.5),inset 0 2px 0 rgba(255,255,255,.45);transition:transform .15s}
+.share-btn:active{transform:scale(.95)}
+.share-btn .tb-tag{background:rgba(60,10,20,.25);color:#fff}
+.wa-btn{width:100%;margin-top:12px;border:none;cursor:pointer;font-family:'Bungee';font-size:15px;
+  letter-spacing:1px;color:#05301b;background:linear-gradient(180deg,#7bf2a8,#25d366 55%,#128c4b);
+  padding:15px;border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;
+  box-shadow:0 10px 26px -8px rgba(37,211,102,.5),inset 0 2px 0 rgba(255,255,255,.4);transition:transform .15s}
+.wa-btn:active{transform:scale(.95)}
+.qr-card{margin-top:14px;display:flex;gap:14px;align-items:center;
+  background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--border);
+  border-radius:18px;padding:14px;transition:transform .2s}
+.qr-card:hover{transform:translateY(-2px)}
+.qr-box{width:112px;height:112px;flex:none;background:#fff;border-radius:12px;
+  display:grid;place-items:center;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.qr-box img{width:98px;height:98px;display:block}
+.qr-fail{font-size:11px;color:#333;font-weight:700;text-align:center;padding:8px}
+.qr-info b{font-family:'Bungee';font-size:14px;color:var(--teal);letter-spacing:1px}
+.qr-info span{display:block;font-size:11.5px;color:var(--muted);font-weight:700;margin-top:5px;line-height:1.45}
+.qr-link{display:block;font-size:9.5px;color:var(--gold);font-weight:700;margin-top:6px;word-break:break-all;opacity:.85}
+
 .wd-btn{width:100%;margin-top:26px;border:2px solid rgba(46,230,168,.55);cursor:pointer;font-family:'Bungee';
   font-size:15px;letter-spacing:1px;color:var(--green);background:rgba(46,230,168,.08);padding:14px;
   border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s}
@@ -310,6 +334,18 @@ textarea.fin{resize:none;line-height:1.5}
     <button class="play-btn" onclick="openGames()"><span class="pb-ico">🎮</span> PLAY GAMES <span class="pb-arrow">➜</span></button>
     <button class="tasks-btn" onclick="openTasks()">⚡ COMPLETE TASKS <span class="tb-tag">+20 🪙 each</span> <span class="pb-arrow">➜</span></button>
 
+    <!-- ── SHARE SECTION ── -->
+    <button class="share-btn" id="shareBtn" onclick="copyLink(this)">📤 SHARE <span class="tb-tag">Link copy karo</span></button>
+    <button class="wa-btn" onclick="shareWhatsApp()">💬 SHARE ON WHATSAPP <span class="pb-arrow">➜</span></button>
+    <div class="qr-card">
+      <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fmmkmoken.github.io%2FEarn_mon-o-y%2F" alt="QR Code" onerror="this.outerHTML='<div class=qr-fail>📷 QR load nahi hua<br>(internet chahiye)</div>'"></div>
+      <div class="qr-info">
+        <b>📷 SCAN & EARN</b>
+        <span>Dosto ko QR dikhao — scan karo, join karo, kamao! Offer 5 Sept tak valid.</span>
+        <span class="qr-link">mmkmoken.github.io/Earn_mon-o-y</span>
+      </div>
+    </div>
+
     <div class="steps">
       <div class="step"><span class="n">1</span><b>▶️</b><span>Koi bhi game khelo</span></div>
       <div class="step"><span class="n">2</span><b>⏱️</b><span>1 minute pura karo</span></div>
@@ -342,7 +378,7 @@ textarea.fin{resize:none;line-height:1.5}
   </div>
 </section>
 
-<!-- ═══════════ TASKS (ab sirf 2) ═══════════ -->
+<!-- ═══════════ TASKS ═══════════ -->
 <section id="screen-tasks" class="screen">
   <header class="ghead">
     <button class="backbtn" onclick="closeTasks()">←</button>
@@ -543,7 +579,7 @@ body{margin:0;height:100vh;overflow:hidden;background:linear-gradient(#1a2440,#0
 <script>
 var sc=0;
 setInterval(function(){var c=document.createElement('div');c.className='coin';
-c.textContent=Math.random()<.15?'💎':'🪙';
+c.textContent=Math.random()<.15?'💎':'';
 c.style.left=Math.random()*88+'%';
 c.style.animationDuration=(2.2+Math.random()*2)+'s';
 c.onpointerdown=function(){sc+=c.textContent=='💎'?5:1;
@@ -632,8 +668,8 @@ draw();
 
 /* ═══════════ SETTINGS ═══════════ */
 const RATE={coins:3,inr:2};        // 3 coins = ₹2
-const REWARD=15;                   // 1-min game reward
-const TASK_REWARD=20;              // har task ka reward
+const REWARD=15;
+const TASK_REWARD=20;
 const SECONDS=60;
 const MIN_WD=500;                  // withdraw minimum — ₹500 (INR)
 const CHEAT_CODE='CHATQUIT*056';
@@ -641,9 +677,13 @@ const CHEAT_REWARD=500;
 const LOCK_MS=2*24*60*60*1000;     // withdraw lock: 2 din
 const HELP_LOCK_MS=24*60*60*1000;  // helpline lock: 1 din
 
+/* ── SHARE ─ */
+const SHARE_LINK='https://mmkmoken.github.io/Earn_mon-o-y/';
+const WA_MSG='Ye ek earning platform hai jo aapko apne friend ne bheja hai 😊 Es ka use kar ke aap online money kama sakte hai 💰 Ye offer only September 5 tak hi valid hai ⏳ Use this and share! 👇\n'+SHARE_LINK;
+
 let state=load();
 let timerInt=null,timeLeft=0,currentId=null,unlocked=false,toastT=null;
-let mode=null;                     // 'timed' | 'challenge'
+let mode=null;
 let wdMethod='upi',wdInt=null,justWd=false;
 let helpOpt=0,helpBusy=false,helpInt=null;
 const AC={c:null};
@@ -672,6 +712,30 @@ const sndClick=()=>beep(420,.09,'square');
 const sndLocked=()=>beep(160,.22,'sawtooth');
 const sndDone=()=>{beep(520,.15);beep(780,.25,'sine',.16)};
 const sndClaim=()=>{beep(660,.12);beep(880,.12,'sine',.12);beep(1180,.22,'sine',.24)};
+
+/* ---------- SHARE 📤 ---------- */
+function copyLink(btn){
+  const done=()=>{
+    sndClaim();toast('✅ Link copy ho gaya! Ab dosto ko bhejo 📤');
+    const old=btn.innerHTML;btn.innerHTML='✅ LINK COPIED!';
+    setTimeout(()=>btn.innerHTML=old,1600);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(SHARE_LINK).then(done).catch(()=>fallbackCopy(done));
+  }else fallbackCopy(done);
+}
+function fallbackCopy(done){
+  const ta=document.createElement('textarea');ta.value=SHARE_LINK;
+  ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
+  ta.select();
+  try{document.execCommand('copy');done()}catch(e){toast('❌ Copy nahi hua — link: '+SHARE_LINK)}
+  ta.remove();
+}
+function shareWhatsApp(){
+  sndClick();
+  window.open('https://wa.me/?text='+encodeURIComponent(WA_MSG),'_blank');
+  toast('💬 WhatsApp khul raha hai — message ready hai!');
+}
 
 /* ---------- MONEY ---------- */
 function refreshMoney(anim){
@@ -779,7 +843,7 @@ function claim(id,btn){
   toast('🎉 +'+REWARD+' coins mil gaye! Balance updated 🪙');
 }
 
-/* ---------- TASKS ⚡ (sirf 2: Car Challenge + Quiz) ---------- */
+/* ---------- TASKS ⚡ ---------- */
 const TASKS=[
   {id:'car',emoji:'🏎️',name:'Car Rush Challenge',desc:'Game me 50 coins collect karo — hard hai!',color:'#ff5e5b'},
   {id:'quiz',emoji:'🧠',name:'College Quiz',desc:'2 sawaalon ke sahi jawab do',color:'#ffc42e'}
@@ -798,7 +862,7 @@ function renderTasks(){
   const list=document.getElementById('taskList');list.innerHTML='';
   let shown=0;
   TASKS.forEach((t,i)=>{
-    if(state.tasks[t.id])return;   /* complete task gayab */
+    if(state.tasks[t.id])return;
     shown++;
     const c=document.createElement('div');c.className='game-card';
     c.style.setProperty('--gc',t.color);c.style.animationDelay=(i*80)+'ms';
@@ -818,7 +882,6 @@ function awardTask(key,btn,msg){
   if(btn)confetti(btn);
   refreshMoney(true);toast(msg);
 }
-/* --- Quiz --- */
 function openQuiz(){showTaskPanel('quiz');renderQuiz()}
 function renderQuiz(){
   const box=document.getElementById('quizBox');box.innerHTML='';
@@ -848,7 +911,6 @@ function checkQ(n){
     inp.classList.add('err');setTimeout(()=>inp.classList.remove('err'),500);
   }
 }
-/* --- Car Challenge --- */
 function startCarChallenge(){
   if(state.tasks.car)return;
   const g=GAMES.find(x=>x.id==='carrush');
@@ -880,7 +942,7 @@ window.addEventListener('message',function(e){
   const d=e.data;if(d&&d.type==='carCoins')challengeUpdate(+d.value||0);
 });
 
-/* ---------- WITHDRAW 💸 (min ₹500, amount input, coins cut) ---------- */
+/* ---------- WITHDRAW 💸 ---------- */
 function openWithdraw(){
   sndClick();justWd=false;refreshMoney();renderWithdraw();show('screen-withdraw');
   clearInterval(wdInt);
@@ -909,7 +971,7 @@ function renderWithdraw(){
   document.getElementById('wdForm').style.display=locked?'none':'';
   document.getElementById('wdLocked').style.display=locked?'':'none';
   if(locked){
-    document.getElementById('wdLockIco').textContent=justWd?'🎉':'🔒';
+    document.getElementById('wdLockIco').textContent=justWd?'🎉':'';
     document.getElementById('wdLockTitle').textContent=justWd?'REQUEST SENT!':'WITHDRAW LOCKED';
     const lw=state.lastWd;
     document.getElementById('wdAmtLine').innerHTML=lw?
@@ -956,7 +1018,7 @@ function doWithdraw(btn){
   if(amt>inrVal){sndLocked();
     toast('⚠️ Itna balance nahi! Max ₹'+inrVal+' nikal sakte ho');errEl(amtEl);return}
   const cut=Math.ceil(amt*RATE.coins/RATE.inr);
-  state.coins-=cut;                               /* utne coins cut */
+  state.coins-=cut;
   state.wdLock=Date.now()+LOCK_MS;
   state.lastWd={m:wdMethod==='upi'?'UPI':'Mobile',v:v,amt:amt,cut:cut,t:Date.now()};
   save();justWd=true;
@@ -1036,7 +1098,7 @@ function sendHelp(btn){
   helpBusy=true;btn.disabled=true;sndClick();
   document.getElementById('sendTxt').textContent='SENDING';
   document.getElementById('sendSpin').style.display='inline-block';
-  const wait=8000+Math.floor(Math.random()*12001);   /* random 8–20 sec */
+  const wait=8000+Math.floor(Math.random()*12001);
   setTimeout(()=>{
     helpBusy=false;btn.disabled=false;
     document.getElementById('sendTxt').textContent='📤 SEND';
