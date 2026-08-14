@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>APPNA HOUSE 🎮</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪙</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0c1322; --panel:#141f38; --panel2:#1b2848;
+  --gold:#ffc42e; --gold2:#ffdf6b; --orange:#ff8a00;
+  --coral:#ff5e5b; --teal:#4cc9f0; --green:#2ee6a8;
+  --text:#f4f7ff; --muted:#8fa0c2; --border:rgba(255,255,255,.08);
+}
+html,body{height:100%}
+body{
+  font-family:'Baloo 2',cursive;color:var(--text);user-select:none;overflow-x:hidden;
+  background:
+    radial-gradient(900px 520px at 85% -10%, rgba(255,196,46,.15), transparent 60%),
+    radial-gradient(700px 500px at -10% 35%, rgba(76,201,240,.10), transparent 60%),
+    radial-gradient(800px 620px at 50% 112%, rgba(255,94,91,.10), transparent 60%),
+    var(--bg);
+}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:26px 26px}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#fx span{position:absolute;bottom:-50px;animation:floatUp linear infinite}
+@keyframes floatUp{to{transform:translateY(-120vh) rotate(360deg)}}
+
+.screen{position:fixed;inset:0;display:none;flex-direction:column;z-index:2;overflow-y:auto}
+.screen.active{display:flex;animation:screenIn .45s cubic-bezier(.22,1,.36,1)}
+@keyframes screenIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+.wrap{max-width:520px;margin:0 auto;width:100%;padding:18px 18px 44px}
+::-webkit-scrollbar{width:0;height:0}
+
+/* ---------- HOME ---------- */
+.topbar{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-coin{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:22px;
+  background:radial-gradient(circle at 35% 30%,#ffe89a,#ffc42e 55%,#d78a00);
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,.3),0 4px 14px rgba(255,180,0,.4);animation:coinSpin 4s linear infinite}
+@keyframes coinSpin{0%{transform:rotateY(0)}100%{transform:rotateY(360deg)}}
+.logo-text{font-family:'Bungee';font-size:19px;letter-spacing:1px;line-height:1}
+.logo-text span{display:block;color:var(--gold);font-size:14px}
+.live{font-size:11px;font-weight:800;color:var(--green);background:rgba(46,230,168,.12);
+  border:1px solid rgba(46,230,168,.3);padding:5px 11px;border-radius:99px;letter-spacing:1px}
+.live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:5px;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.tagline{color:var(--muted);font-size:13.5px;margin-top:10px;font-weight:600}
+
+.balance-wrap{perspective:1000px;margin:16px 0 18px}
+.balance-card{position:relative;height:178px;transform-style:preserve-3d;cursor:pointer;
+  transition:transform .7s cubic-bezier(.3,1.4,.4,1)}
+.balance-card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:22px;padding:20px 22px;
+  display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border);overflow:hidden}
+.face::after{content:"🪙";position:absolute;font-size:120px;right:-20px;bottom:-28px;opacity:.09;transform:rotate(-14deg)}
+.face.front{background:linear-gradient(135deg,#1c2c58,#14203f 55%,#173052);
+  box-shadow:0 20px 44px -20px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.09)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(135deg,#0e4231,#12463a 55%,#0c3a2c);
+  box-shadow:0 20px 44px -20px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.09)}
+.bal-top{display:flex;justify-content:space-between;align-items:center}
+.bal-label{font-size:11px;font-weight:800;letter-spacing:2.5px;color:var(--muted)}
+.bal-badge{font-size:11px;font-weight:800;background:rgba(255,196,46,.14);color:var(--gold);
+  border:1px solid rgba(255,196,46,.35);padding:4px 10px;border-radius:99px}
+.bal-amount{font-family:'Bungee';font-size:46px;color:var(--gold);display:flex;align-items:center;gap:12px;
+  text-shadow:0 4px 20px rgba(255,196,46,.35)}
+.face.back .bal-amount{color:var(--green);text-shadow:0 4px 20px rgba(46,230,168,.35)}
+.coin-ico{width:30px;height:30px;border-radius:50%;flex:none;display:inline-block;
+  background:radial-gradient(circle at 35% 30%,#ffe89a,#ffc42e 55%,#d78a00);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.3),0 2px 8px rgba(255,180,0,.4)}
+.bal-hint{font-size:12.5px;color:var(--muted);font-weight:700}
+
+.play-btn{width:100%;border:none;cursor:pointer;font-family:'Bungee';font-size:21px;letter-spacing:1px;
+  color:#3a2400;background:linear-gradient(180deg,#ffdf6b,#ffb400 55%,#ff8a00);
+  padding:19px;border-radius:18px;position:relative;overflow:hidden;
+  display:flex;justify-content:center;align-items:center;gap:12px;
+  box-shadow:0 12px 30px -8px rgba(255,170,0,.55),inset 0 2px 0 rgba(255,255,255,.5);transition:transform .15s}
+.play-btn:active{transform:scale(.95)}
+.play-btn::after{content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-20deg);animation:shine 2.8s infinite}
+@keyframes shine{0%{left:-80%}55%,100%{left:130%}}
+.pb-ico{font-size:26px;animation:hop 1.6s ease-in-out infinite}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pb-arrow{animation:nudge 1.3s infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+.tasks-btn{width:100%;margin-top:12px;border:none;cursor:pointer;font-family:'Bungee';font-size:16px;
+  letter-spacing:1px;color:#04303c;background:linear-gradient(180deg,#7de9ff,#33c6f2 55%,#189fd6);
+  padding:16px;border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;
+  box-shadow:0 10px 26px -8px rgba(45,190,235,.5),inset 0 2px 0 rgba(255,255,255,.45);transition:transform .15s}
+.tasks-btn:active{transform:scale(.95)}
+.tb-tag{font-family:'Baloo 2';font-size:11px;font-weight:800;background:rgba(4,48,60,.22);padding:3px 9px;border-radius:99px}
+
+.wd-btn{width:100%;margin-top:26px;border:2px solid rgba(46,230,168,.55);cursor:pointer;font-family:'Bungee';
+  font-size:15px;letter-spacing:1px;color:var(--green);background:rgba(46,230,168,.08);padding:14px;
+  border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s}
+.wd-btn:hover{background:rgba(46,230,168,.16);box-shadow:0 8px 24px -10px rgba(46,230,168,.5)}
+.wd-btn:active{transform:scale(.96)}
+.cheat-btn{width:100%;margin-top:12px;border:2px solid rgba(180,92,255,.55);cursor:pointer;font-family:'Bungee';
+  font-size:15px;letter-spacing:1px;color:#d3a4ff;background:rgba(160,70,230,.08);padding:14px;
+  border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s}
+.cheat-btn:active{transform:scale(.96)}
+.help-btn{width:100%;margin-top:12px;border:2px solid rgba(76,201,240,.55);cursor:pointer;font-family:'Bungee';
+  font-size:15px;letter-spacing:1px;color:var(--teal);background:rgba(76,201,240,.08);padding:14px;
+  border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s}
+.help-btn:active{transform:scale(.96)}
+.wd-sub{font-family:'Baloo 2';font-size:10.5px;font-weight:800;color:var(--muted)}
+
+.steps{display:flex;gap:10px;margin-top:24px}
+.step{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:16px;
+  padding:13px 6px;text-align:center;position:relative;transition:transform .2s,border-color .2s}
+.step:hover{transform:translateY(-3px);border-color:rgba(255,196,46,.35)}
+.step .n{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:19px;height:19px;
+  border-radius:50%;background:var(--gold);color:#3a2400;font-size:11px;font-weight:800;
+  display:grid;place-items:center;font-family:'Bungee'}
+.step b{font-size:24px;display:block}
+.step span{font-size:11px;color:var(--muted);font-weight:700;line-height:1.3;display:block;margin-top:5px}
+.stats{display:flex;gap:10px;margin-top:22px}
+.stat{flex:1;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--border);
+  border-radius:16px;padding:13px 6px;text-align:center}
+.stat b{font-family:'Bungee';font-size:20px;color:var(--gold);display:block}
+.stat span{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.4px}
+.foot{text-align:center;margin-top:22px;color:var(--muted);font-size:11.5px;font-weight:600;opacity:.7}
+
+/* ---------- SHARED ---------- */
+.ghead{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 16px;
+  background:rgba(12,19,34,.92);border-bottom:1px solid var(--border)}
+.ghead h2{font-family:'Bungee';font-size:16px;letter-spacing:1px;flex:1}
+.ghead h2 em{color:var(--gold);font-style:normal}
+.chip-balance{display:flex;align-items:center;gap:7px;background:rgba(255,196,46,.12);
+  border:1px solid rgba(255,196,46,.35);border-radius:99px;padding:6px 13px;font-weight:800;color:var(--gold)}
+.chip-balance .coin-ico{width:18px;height:18px}
+.chip-balance.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.22)}}
+.gsub{color:var(--muted);font-size:13px;font-weight:700;margin:14px 0}
+.backbtn{width:44px;height:44px;flex:none;border-radius:14px;border:1px solid var(--border);
+  background:var(--panel2);color:#fff;font-size:20px;cursor:pointer;position:relative;
+  display:grid;place-items:center;font-family:'Bungee';transition:.25s}
+.backbtn.locked{opacity:.5}
+.bb-lock{position:absolute;bottom:-7px;right:-7px;font-size:12px;background:#0c1322;
+  border:1px solid var(--border);border-radius:50%;width:22px;height:22px;display:grid;place-items:center}
+.backbtn.unlocked{background:linear-gradient(180deg,#54f0a8,#0fae62);color:#04301c;opacity:1;
+  border:none;animation:pulse 1.2s infinite}
+.backbtn.unlocked .bb-lock,.backbtn.free .bb-lock{display:none}
+.backbtn.free{opacity:1}
+.backbtn.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,230,168,.55)}50%{box-shadow:0 0 0 12px rgba(46,230,168,0)}}
+
+.game-card{display:flex;align-items:center;gap:13px;background:linear-gradient(135deg,var(--panel),#101a30);
+  border:1px solid var(--border);border-left:4px solid var(--gc,#888);border-radius:16px;
+  padding:14px;margin-bottom:13px;transition:transform .2s,box-shadow .2s;animation:cardIn .5s backwards}
+@keyframes cardIn{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+.game-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(0,0,0,.85)}
+.game-card.ready{border-color:rgba(46,230,168,.5)}
+.gc-emoji{width:60px;height:60px;flex:none;display:grid;place-items:center;font-size:30px;border-radius:14px}
+.gc-info{flex:1;min-width:0}
+.gc-info h3{font-size:16.5px;font-weight:800}
+.gc-info p{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.gc-meta{font-size:10.5px;font-weight:800;color:var(--gold);margin-top:5px;opacity:.9}
+.btn-play,.btn-claim,.btn-start{font-family:'Bungee';font-size:12px;border:none;border-radius:12px;
+  padding:11px 14px;cursor:pointer;white-space:nowrap;transition:transform .15s}
+.btn-play{background:linear-gradient(180deg,#ffdf6b,#ff9d00);color:#3a2400;box-shadow:0 6px 16px -6px rgba(255,170,0,.6)}
+.btn-claim{background:linear-gradient(180deg,#54f0a8,#0fae62);color:#04301c;animation:pulse 1.1s infinite}
+.btn-start{font-size:11.5px;padding:11px 13px;background:linear-gradient(180deg,#7de9ff,#189fd6);
+  color:#04303c;box-shadow:0 6px 16px -6px rgba(45,190,235,.55)}
+.btn-play:active,.btn-claim:active,.btn-start:active{transform:scale(.92)}
+
+/* ---------- PLAYER ---------- */
+#screen-play{overflow:hidden}
+.phead{display:flex;align-items:center;gap:12px;padding:11px 14px;
+  background:rgba(10,16,30,.95);border-bottom:1px solid var(--border);flex:none}
+.ptimer{flex:1}
+.tbar{height:10px;background:#0a1120;border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+#tfill{height:100%;width:100%;background:linear-gradient(90deg,#ffc42e,#ff8a00);transition:width 1s linear}
+#tfill.done{background:linear-gradient(90deg,#54f0a8,#0fae62);animation:blink 1s infinite}
+#tfill.chl{background:linear-gradient(90deg,#54f0a8,#0fae62);transition:width .3s}
+.trow{display:flex;justify-content:space-between;margin-top:5px;font-size:11.5px;font-weight:800}
+#ttext{font-family:'Bungee';color:var(--gold);font-size:12px}
+#ttext.done{color:var(--green)}
+.preward{font-size:10.5px;color:var(--muted)}
+#gameFrame{flex:1;width:100%;border:none;background:#000}
+
+/* ---------- TASKS ---------- */
+.task-progress{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:13px 15px;margin:14px 0 16px}
+.tp-top{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:8px}
+.tp-top b{color:var(--teal);font-family:'Bungee';font-size:13px}
+#taskBar{background:linear-gradient(90deg,#7de9ff,#189fd6);height:100%;width:0;transition:width .6s}
+.sub-back{font-size:13px;font-weight:800;color:var(--teal);margin:0 0 12px;cursor:pointer;display:inline-block}
+.empty{border:2px dashed rgba(255,196,46,.35);border-radius:18px;padding:34px 16px;text-align:center;
+  display:grid;gap:8px;justify-items:center}
+.empty b{font-size:46px}
+.empty span{color:var(--muted);font-weight:700;font-size:13.5px;line-height:1.5}
+
+.wd-card{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--border);
+  border-radius:20px;padding:20px;margin-bottom:14px}
+.wc-title{font-size:18px;font-weight:800}
+.wc-sub{color:var(--muted);font-size:12.5px;font-weight:700;margin:4px 0 2px}
+.wc-sub b{color:var(--gold)}
+.flabel{display:block;font-size:12px;font-weight:800;color:var(--muted);margin:13px 0 6px;letter-spacing:.4px}
+.fin{width:100%;background:#0d1628;border:1.5px solid var(--border);border-radius:13px;padding:13px 14px;
+  color:var(--text);font-family:'Baloo 2';font-size:15px;font-weight:600;outline:none;transition:.2s}
+.fin:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,196,46,.15)}
+.fin.err{border-color:var(--coral);animation:shake .4s}
+textarea.fin{resize:none;line-height:1.5}
+.wd-go{width:100%;margin-top:18px;font-family:'Bungee';font-size:17px;padding:16px;border:none;border-radius:16px;
+  cursor:pointer;color:#04301c;background:linear-gradient(180deg,#54f0a8,#0fae62);
+  box-shadow:0 10px 26px -8px rgba(16,190,110,.5),inset 0 2px 0 rgba(255,255,255,.4);transition:transform .15s}
+.wd-go:active{transform:scale(.96)}
+.wd-go:disabled{opacity:.7;cursor:wait}
+
+.q-card{border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:13px;background:rgba(13,22,40,.5)}
+.q-num{font-family:'Bungee';font-size:11px;color:var(--muted);margin-bottom:8px}
+.q-hint{font-family:'Bungee';font-size:19px;letter-spacing:4px;color:var(--gold);background:#0d1628;
+  border:1.5px dashed rgba(255,196,46,.4);padding:12px;border-radius:12px;text-align:center;margin-bottom:10px}
+.q-row{display:flex;gap:8px}
+.q-row .fin{flex:1;padding:11px 12px}
+.q-done{border-color:rgba(46,230,168,.45);background:rgba(46,230,168,.07)}
+.q-ok{color:var(--green);font-weight:800;text-align:center;font-size:14px}
+
+/* ---------- WITHDRAW ---------- */
+.wd-bal{display:flex;gap:12px;background:linear-gradient(135deg,var(--panel2),var(--panel));
+  border:1px solid var(--border);border-radius:18px;padding:16px;margin:14px 0}
+.wd-bal-l,.wd-bal-r{flex:1}
+.wd-amt{font-family:'Bungee';font-size:25px;color:var(--gold);display:flex;align-items:center;gap:8px;margin:5px 0}
+.wd-amt .coin-ico{width:20px;height:20px}
+.wd-inr{color:var(--green);font-weight:800;font-size:13px}
+.wd-req{font-size:11px;font-weight:800;color:var(--muted);display:block;margin-top:6px}
+#wdBar{background:linear-gradient(90deg,#54f0a8,#0fae62);height:100%;width:0;transition:width .6s}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 4px}
+.method{background:var(--panel);border:1.5px solid var(--border);border-radius:14px;padding:13px 8px;
+  text-align:center;cursor:pointer;transition:.2s}
+.method b{font-size:22px;display:block}
+.method span{font-size:11px;font-weight:700;color:var(--muted);line-height:1.3;display:block;margin-top:3px}
+.method.sel{border-color:var(--teal);background:rgba(76,201,240,.1);box-shadow:0 0 0 3px rgba(76,201,240,.12)}
+.amt-hint{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:8px;text-align:center}
+.wd-note{text-align:center;color:var(--muted);font-size:11.5px;font-weight:700;margin-top:13px}
+.locked-card{text-align:center;padding:30px 20px}
+.lock-ico{font-size:54px;animation:hop 2s infinite}
+.lock-timer{font-family:'Bungee';font-size:25px;color:var(--coral);margin:12px 0;letter-spacing:1px}
+.wd-trust{color:var(--green);font-weight:800;font-size:13.5px}
+.wd-amt-line{font-weight:800;color:var(--gold);font-size:14px;margin-top:10px}
+
+/* ---------- CHEAT ---------- */
+.cheat-ico{font-size:52px;text-align:center;animation:hop 2s infinite}
+.cheat-in{text-align:center;font-family:'Bungee';letter-spacing:2px;font-size:16px;margin-top:14px;text-transform:uppercase}
+.cheat-go{width:100%;margin-top:16px;font-family:'Bungee';font-size:17px;padding:16px;border:none;border-radius:16px;
+  cursor:pointer;color:#2a0440;background:linear-gradient(180deg,#e0b3ff,#b45cff 55%,#8b2fd6);
+  box-shadow:0 10px 26px -8px rgba(160,70,230,.55),inset 0 2px 0 rgba(255,255,255,.4);transition:transform .15s}
+.cheat-go:active{transform:scale(.96)}
+
+/* ---------- HELP LINE ---------- */
+.hopt{display:flex;align-items:center;gap:12px;background:var(--panel);border:1.5px solid var(--border);
+  border-radius:14px;padding:13px;margin-top:10px;cursor:pointer;transition:.2s}
+.hopt b{font-size:20px}
+.hopt span{flex:1;font-weight:700;font-size:13.5px}
+.hopt .tick{width:22px;height:22px;flex:none;border-radius:50%;border:2px solid var(--border);
+  display:grid;place-items:center;font-size:12px;color:transparent;font-style:normal;transition:.2s}
+.hopt.sel{border-color:var(--teal);background:rgba(76,201,240,.1)}
+.hopt.sel .tick{background:var(--teal);border-color:var(--teal);color:#04303c}
+.help-note{font-size:11px;color:var(--coral);font-weight:700;margin-top:10px;text-align:center}
+.send-btn{display:flex;align-items:center;justify-content:center;gap:10px}
+.spin{width:18px;height:18px;border:3px solid rgba(4,48,28,.25);border-top-color:#04301c;
+  border-radius:50%;animation:rot .8s linear infinite;display:inline-block;flex:none}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* ---------- TOAST / FX ---------- */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);
+  background:#1d2b4d;border:1px solid rgba(255,196,46,.3);padding:12px 22px;border-radius:99px;
+  font-size:13.5px;font-weight:700;z-index:99;transition:.35s;opacity:0;max-width:90%;text-align:center;
+  box-shadow:0 14px 34px rgba(0,0,0,.55)}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.conf{position:fixed;width:10px;height:14px;top:-20px;z-index:98;border-radius:3px;animation:confFall linear forwards}
+@keyframes confFall{to{transform:translate(var(--dx),108vh) rotate(760deg)}}
+.fly{position:fixed;z-index:97;font-size:26px;pointer-events:none;
+  transition:transform .8s cubic-bezier(.3,-.2,.4,1),opacity .8s}
+</style>
+</head>
+<body>
+<div id="fx"></div>
+
+<!-- ═══════════ HOME ═══════════ -->
+<section id="screen-home" class="screen active">
+  <div class="wrap">
+    <header class="topbar">
+      <div class="logo"><div class="logo-coin">🪙</div><div class="logo-text">APPNA<span>HOUSE</span></div></div>
+      <div class="live"><i></i>LIVE</div>
+    </header>
+    <p class="tagline">Khelo, jeeto aur coins kamao! 🎉</p>
+
+    <div class="balance-wrap" onclick="flipBalance()">
+      <div class="balance-card" id="balCard">
+        <div class="face front">
+          <div class="bal-top"><span class="bal-label">YOUR BALANCE</span><span class="bal-badge">+15 🪙 / game</span></div>
+          <div class="bal-amount"><span class="coin-ico"></span><span id="coinCount">0</span></div>
+          <div class="bal-hint">👆 Tap karo — ₹ value dekho</div>
+        </div>
+        <div class="face back">
+          <div class="bal-top"><span class="bal-label">INR VALUE</span><span class="bal-badge">🇮🇳 Rupees</span></div>
+          <div class="bal-amount">₹<span id="inrCount">0.00</span></div>
+          <div class="bal-hint" id="inrNote">Rate: 3 🪙 = ₹2</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="play-btn" onclick="openGames()"><span class="pb-ico">🎮</span> PLAY GAMES <span class="pb-arrow">➜</span></button>
+    <button class="tasks-btn" onclick="openTasks()">⚡ COMPLETE TASKS <span class="tb-tag">+20 🪙 each</span> <span class="pb-arrow">➜</span></button>
+
+    <div class="steps">
+      <div class="step"><span class="n">1</span><b>▶️</b><span>Koi bhi game khelo</span></div>
+      <div class="step"><span class="n">2</span><b>⏱️</b><span>1 minute pura karo</span></div>
+      <div class="step"><span class="n">3</span><b>🎁</b><span>15 coins claim karo</span></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="statEarned">0</b><span>TOTAL EARNED 🪙</span></div>
+      <div class="stat"><b id="statPlays">0</b><span>GAMES PLAYED</span></div>
+      <div class="stat"><b id="statGames">0</b><span>TOTAL GAMES</span></div>
+    </div>
+
+    <button class="wd-btn" onclick="openWithdraw()">💸 WITHDRAW MONEY <span class="wd-sub">Min. ₹500 • UPI / Mobile</span></button>
+    <button class="cheat-btn" onclick="openCheat()">🕹️ CHEAT CODE <span class="wd-sub">Secret reward 🔐</span></button>
+    <button class="help-btn" onclick="openHelp()">🎧 HELP LINE <span class="wd-sub">Problem report karo</span></button>
+    <p class="foot">APPNA HOUSE • Play, Earn & Have Fun ❤️</p>
+  </div>
+</section>
+
+<!-- ═══════════ GAMES ═══════════ -->
+<section id="screen-games" class="screen">
+  <header class="ghead">
+    <button class="backbtn" onclick="goHome()">←</button>
+    <h2>GAMES <em>ZONE</em></h2>
+    <div class="chip-balance" id="chipBal"><span class="coin-ico"></span><b id="chipCoins">0</b></div>
+  </header>
+  <div class="wrap">
+    <p class="gsub">⏱ 1 minute khelo → wapas aao → 🎁 15 coins claim karo!</p>
+    <div id="gameList"></div>
+  </div>
+</section>
+
+<!-- ═══════════ TASKS (ab sirf 2) ═══════════ -->
+<section id="screen-tasks" class="screen">
+  <header class="ghead">
+    <button class="backbtn" onclick="closeTasks()">←</button>
+    <h2>TASKS <em>⚡</em></h2>
+    <div class="chip-balance"><span class="coin-ico"></span><b id="taskChip">0</b></div>
+  </header>
+  <div class="wrap">
+    <div class="task-progress">
+      <div class="tp-top"><span>⚡ Task Progress</span><b id="taskProg">0 / 2</b></div>
+      <div class="tbar"><div id="taskBar"></div></div>
+    </div>
+    <div id="taskListWrap"><div id="taskList"></div>
+      <div id="taskEmpty" class="empty" style="display:none"><b>🎉</b><span>Wah! Saare tasks complete ho gaye!<br>Ab games khel ke aur coins kamao 🎮</span></div>
+    </div>
+    <div id="quizWrap" style="display:none">
+      <div class="sub-back" onclick="showTaskPanel('list')">← Tasks pe wapas</div>
+      <div class="wd-card">
+        <h3 class="wc-title">🧠 College Quiz</h3>
+        <p class="wc-sub">Dono sahi jawab do → <b>+20 🪙</b></p>
+        <div id="quizBox"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ WITHDRAW ═══════════ -->
+<section id="screen-withdraw" class="screen">
+  <header class="ghead">
+    <button class="backbtn" onclick="closeWithdraw()">←</button>
+    <h2>WITHDRAW <em>MONEY</em></h2>
+    <div class="chip-balance"><span class="coin-ico"></span><b id="wdChip">0</b></div>
+  </header>
+  <div class="wrap">
+    <div class="wd-bal">
+      <div class="wd-bal-l">
+        <span class="bal-label">BALANCE</span>
+        <div class="wd-amt"><span class="coin-ico"></span><span id="wdCoins">0</span></div>
+        <span class="wd-inr" id="wdInr">= ₹0.00</span>
+      </div>
+      <div class="wd-bal-r">
+        <span class="bal-label">MIN. ₹500</span>
+        <div class="tbar" style="margin-top:9px"><div id="wdBar"></div></div>
+        <span class="wd-req" id="wdReq">₹0 / ₹500</span>
+      </div>
+    </div>
+
+    <div class="wd-card" id="wdForm">
+      <h3 class="wc-title">💳 Choose Method</h3>
+      <div class="methods">
+        <div class="method sel" id="mUpi" onclick="selectMethod('upi')"><b>🆔</b><span>Withdraw with<br>UPI ID</span></div>
+        <div class="method" id="mPhone" onclick="selectMethod('phone')"><b>📱</b><span>Withdraw with<br>Scanner / Mobile No.</span></div>
+      </div>
+      <div id="upiBox"><label class="flabel">UPI ID LIKHO</label><input class="fin" id="upiIn" placeholder="yourname@upi"></div>
+      <div id="phoneBox" style="display:none"><label class="flabel">MOBILE NUMBER LIKHO</label><input class="fin" id="phoneIn" type="tel" maxlength="10" placeholder="10-digit mobile number"></div>
+      <label class="flabel">KITNE PAISE NIKALNE HAI? (₹)</label>
+      <input class="fin" id="amtIn" type="number" min="500" placeholder="Min. ₹500">
+      <div class="amt-hint" id="amtHint"></div>
+      <button class="wd-go" onclick="doWithdraw(this)">💸 WITHDRAW</button>
+      <p class="wd-note">🔒 Min. ₹500 balance • Withdraw ke baad 2 din ka lock</p>
+    </div>
+
+    <div class="wd-card locked-card" id="wdLocked" style="display:none">
+      <div class="lock-ico" id="wdLockIco">🔒</div>
+      <h3 class="display" id="wdLockTitle" style="font-size:18px;letter-spacing:1px">WITHDRAW LOCKED</h3>
+      <p class="wd-trust" style="margin-top:8px">✅ Withdraw within 7 days — Trusted 🤝</p>
+      <div class="wd-amt-line" id="wdAmtLine"></div>
+      <div class="lock-timer" id="wdCountdown">--</div>
+      <p class="wd-note">2 din baad dubara withdraw kar sakte ho</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHEAT CODE ═══════════ -->
+<section id="screen-cheat" class="screen">
+  <header class="ghead">
+    <button class="backbtn" onclick="closeCheat()">←</button>
+    <h2>CHEAT <em>CODE</em></h2>
+    <div class="chip-balance"><span class="coin-ico"></span><b id="cheatChip">0</b></div>
+  </header>
+  <div class="wrap">
+    <div class="wd-card" id="cheatForm">
+      <div class="cheat-ico">🕹️</div>
+      <h3 class="wc-title" style="text-align:center;margin-top:8px">SECRET CODE ENTER KARO</h3>
+      <p class="wc-sub" style="text-align:center">Sahi code = <b>+500 🪙</b> instant!</p>
+      <input class="fin cheat-in" id="cheatIn" placeholder="CODE LIKHO" autocomplete="off">
+      <button class="cheat-go" onclick="submitCheat(this)">🔓 UNLOCK & CLAIM</button>
+    </div>
+    <div class="wd-card locked-card" id="cheatDone" style="display:none">
+      <div class="lock-ico">✅</div>
+      <h3 class="display" style="font-size:18px;color:var(--green)">CODE USED!</h3>
+      <p class="wd-trust" style="margin-top:8px">+500 🪙 claim ho chuke — balance me add ho gaye!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HELP LINE ═══════════ -->
+<section id="screen-help" class="screen">
+  <header class="ghead">
+    <button class="backbtn" onclick="closeHelp()">←</button>
+    <h2>HELP <em>LINE</em></h2>
+    <div class="chip-balance"><span class="coin-ico"></span><b id="helpChip">0</b></div>
+  </header>
+  <div class="wrap">
+    <p class="gsub">Problem select karo, likho aur send karo 🤝</p>
+
+    <div id="helpForm">
+      <div class="wd-card">
+        <h3 class="wc-title">📋 Problem Select Karo</h3>
+        <div class="hopt" id="ho1" onclick="selHelp(1)"><b>💸</b><span>Withdraw Problem</span><i class="tick">✓</i></div>
+        <div class="hopt" id="ho2" onclick="selHelp(2)"><b>🎮</b><span>Games / Coins / Rupees Problem</span><i class="tick">✓</i></div>
+        <div class="hopt" id="ho3" onclick="selHelp(3)"><b>🕹️</b><span>Cheat Code Problem</span><i class="tick">✓</i></div>
+      </div>
+      <div class="wd-card">
+        <h3 class="wc-title">✍️ Apni Problem Likho</h3>
+        <textarea class="fin" id="helpMsg" rows="4" placeholder="Yahan apni problem likho..."></textarea>
+        <div class="help-note">⚠️ Send karne ke baad 1 din tak dubara message nahi bhej sakte!</div>
+        <button class="wd-go send-btn" id="sendBtn" onclick="sendHelp(this)">
+          <span id="sendTxt">📤 SEND</span><span class="spin" id="sendSpin" style="display:none"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="wd-card locked-card" id="helpDone" style="display:none">
+      <div class="lock-ico">📨</div>
+      <h3 class="display" style="font-size:18px;color:var(--green)">PROBLEM POSTED ✅</h3>
+      <p class="wc-sub" id="helpLast" style="margin-top:6px"></p>
+      <div class="lock-timer" id="helpCount">--</div>
+      <p class="wd-note">1 din baad dubara bhej sakte ho</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PLAYER ═══════════ -->
+<section id="screen-play" class="screen">
+  <header class="phead">
+    <button id="backBtn" class="backbtn locked" onclick="exitGame()">←<span class="bb-lock">🔒</span></button>
+    <div class="ptimer">
+      <div class="tbar"><div id="tfill"></div></div>
+      <div class="trow"><span id="ttext">⏱ 1:00</span><span class="preward" id="pGameName">🎮 Game</span></div>
+    </div>
+  </header>
+  <iframe id="gameFrame" sandbox="allow-scripts"></iframe>
+</section>
+
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   🎮🎮  APNE GAMES YAHAN ADD KARO  🎮🎮
+   { id:"unique-naam", name:"Game Ka Naam", emoji:"🚀",
+     color:"#ff5e5b", desc:"Description",
+     html:`YAHAN PURA HTML GAME CODE PASTE KARO` },
+   ═══════════════════════════════════════════════════════════════ */
+const GAMES = [
+  {
+    id: "snake", name: "Snake Master", emoji: "🐍", color: "#2ee6a8",
+    desc: "Saap ko khana khilao, lamba banao!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:#0b1120;color:#fff;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden}
+canvas{background:#0f1830;border:2px solid #ffc42e;border-radius:12px}
+#s{font-size:22px;font-weight:bold;color:#ffc42e;margin-bottom:8px}
+.t{font-size:11px;color:#8fa0c2;margin-top:8px}
+.pad{display:grid;grid-template-columns:repeat(3,56px);gap:6px;margin-top:10px}
+.pad button{height:44px;border-radius:10px;border:none;background:#1c2a4a;color:#ffc42e;font-size:20px}
+</style></head><body>
+<div id="s">Score: 0</div><canvas id="c" width="280" height="280"></canvas>
+<div class="t">Arrow keys ya buttons dabao</div>
+<div class="pad"><span></span><button onclick="setD(0,-1)">▲</button><span></span><button onclick="setD(-1,0)">◀</button><button onclick="setD(0,1)">▼</button><button onclick="setD(1,0)">▶</button></div>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d'),g=14,n=20,sn=[[10,10]],f=[15,10],d=[1,0],nd=[1,0],sc=0,dead=false;
+function setD(a,b){if(a===-d[0]&&b===-d[1])return;nd=[a,b]}
+document.addEventListener('keydown',function(e){var k=e.key;if(k=='ArrowUp')setD(0,-1);if(k=='ArrowDown')setD(0,1);if(k=='ArrowLeft')setD(-1,0);if(k=='ArrowRight')setD(1,0)});
+function food(){f=[Math.floor(Math.random()*n),Math.floor(Math.random()*n)]}
+setInterval(function(){if(dead)return;d=nd;var h=[sn[0][0]+d[0],sn[0][1]+d[1]];
+if(h[0]<0||h[1]<0||h[0]>=n||h[1]>=n||sn.some(function(p){return p[0]==h[0]&&p[1]==h[1]})){dead=true;setTimeout(function(){dead=false;sn=[[10,10]];d=[1,0];nd=[1,0];sc=0;up();},1300);return}
+sn.unshift(h);if(h[0]==f[0]&&h[1]==f[1]){sc++;up();food()}else sn.pop();draw()},130);
+function up(){document.getElementById('s').textContent='Score: '+sc}
+function draw(){x.fillStyle='#0f1830';x.fillRect(0,0,280,280);
+x.fillStyle='#ff5e5b';x.beginPath();x.arc(f[0]*g+g/2,f[1]*g+g/2,g/2-2,0,7);x.fill();
+sn.forEach(function(p,i){x.fillStyle=i?'#ffc42e':'#ffdf6b';x.fillRect(p[0]*g+1,p[1]*g+1,g-2,g-2)});
+if(dead){x.fillStyle='rgba(0,0,0,.65)';x.fillRect(0,0,280,280);x.fillStyle='#ff5e5b';x.font='bold 26px sans-serif';x.textAlign='center';x.fillText('CRASH! 💥',140,132);x.fillStyle='#fff';x.font='14px sans-serif';x.fillText('Restarting...',140,158)}}
+draw();
+<\/script></body></html>`
+  },
+  {
+    id: "coincatch", name: "Coin Catcher", emoji: "🪙", color: "#ffc42e",
+    desc: "Girte coins ko tap karke pakdo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;height:100vh;overflow:hidden;background:linear-gradient(#1a2440,#0b1120);font-family:sans-serif}
+#hud{position:fixed;top:10px;left:0;right:0;text-align:center;color:#ffc42e;font-weight:bold;font-size:22px}
+.hint{position:fixed;bottom:12px;left:0;right:0;text-align:center;color:#8fa0c2;font-size:12px}
+.coin{position:absolute;top:-50px;font-size:36px;cursor:pointer;user-select:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(108vh)}}
+.pop{animation:pop .3s forwards !important}
+@keyframes pop{to{transform:scale(2.2);opacity:0}}
+</style></head><body>
+<div id="hud">Coins: 0</div><div class="hint">🪙 = 1 point • 💎 = 5 points</div>
+<script>
+var sc=0;
+setInterval(function(){var c=document.createElement('div');c.className='coin';
+c.textContent=Math.random()<.15?'💎':'🪙';
+c.style.left=Math.random()*88+'%';
+c.style.animationDuration=(2.2+Math.random()*2)+'s';
+c.onpointerdown=function(){sc+=c.textContent=='💎'?5:1;
+document.getElementById('hud').textContent='Coins: '+sc;
+c.classList.add('pop');setTimeout(function(){c.remove()},300)};
+c.addEventListener('animationend',function(){c.remove()});
+document.body.appendChild(c)},620);
+<\/script></body></html>`
+  },
+  {
+    id: "bubblepop", name: "Bubble Pop", emoji: "🫧", color: "#4cc9f0",
+    desc: "Bubbles phodo, score badhao!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 20%,#12304a,#04101c);font-family:sans-serif}
+#h{position:fixed;top:10px;width:100%;text-align:center;color:#7fe3ff;font-weight:bold;font-size:22px}
+.b{position:absolute;bottom:-90px;border-radius:50%;cursor:pointer;animation:rise linear forwards;
+box-shadow:inset -4px -6px 12px rgba(0,0,0,.25),inset 4px 6px 12px rgba(255,255,255,.35)}
+@keyframes rise{to{bottom:112%}}
+.p{transition:.18s;transform:scale(1.8);opacity:0}
+</style></head><body>
+<div id="h">Popped: 0</div>
+<script>
+var sc=0,cols=['#ff5e5b','#ffc42e','#2ee6a8','#4cc9f0','#c77dff'];
+setInterval(function(){var b=document.createElement('div');b.className='b';
+var s=30+Math.random()*46;b.style.width=b.style.height=s+'px';
+b.style.left=Math.random()*88+'%';
+b.style.background=cols[Math.floor(Math.random()*cols.length)];
+b.style.animationDuration=(2.4+Math.random()*2.6)+'s';
+b.onpointerdown=function(){sc++;document.getElementById('h').textContent='Popped: '+sc;
+b.classList.add('p');setTimeout(function(){b.remove()},200)};
+b.addEventListener('animationend',function(){b.remove()});
+document.body.appendChild(b)},520);
+<\/script></body></html>`
+  },
+  {
+    /* ⚠ Ye game COMPLETE TASKS ke Car Challenge me bhi use hota hai (id mat badalna!) */
+    id: "carrush", name: "Car Rush", emoji: "🏎️", color: "#ff5e5b",
+    desc: "Coins pakdo, obstacles se bacho — crash = score ZERO!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:#111a2e;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
+#h{font-size:20px;font-weight:bold;color:#ffc42e;margin-bottom:4px}
+#goal{font-size:11px;color:#8fa0c2;margin-bottom:6px}
+canvas{background:#182443;border:2px solid #ff5e5b;border-radius:12px}
+.pad{display:flex;gap:14px;margin-top:10px}
+.pad button{width:88px;height:48px;border-radius:12px;border:none;background:#22315a;color:#ffc42e;font-size:22px}
+</style></head><body>
+<div id="h">Coins: 0</div><div id="goal">🎯 Target: 50 🪙 • 🚧 se bacho — crash pe score reset!</div>
+<canvas id="c" width="300" height="420"></canvas>
+<div class="pad"><button onclick="mv(-1)">◀</button><button onclick="mv(1)">▶</button></div>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d');
+var lanes=[60,150,240],car=1,coins=0,dead=false,obs=[],cns=[],fr=0,sp=2.3;
+function mv(d){var n=car+d;if(n>=0&&n<3)car=n}
+document.addEventListener('keydown',function(e){if(e.key=='ArrowLeft')mv(-1);if(e.key=='ArrowRight')mv(1)});
+setInterval(function(){if(dead)return;fr++;
+if(fr%52==0)cns.push({l:Math.floor(Math.random()*3),y:-20});
+if(fr%40==0)obs.push({l:Math.floor(Math.random()*3),y:-24});
+if(fr%600==0)sp+=0.4;
+var spd=sp+coins*0.03;
+cns.forEach(function(o){o.y+=spd});obs.forEach(function(o){o.y+=spd});
+cns=cns.filter(function(o){return o.y<440});obs=obs.filter(function(o){return o.y<440});
+var cy=360;
+for(var i=cns.length-1;i>=0;i--){if(Math.abs(cns[i].y-cy)<26&&cns[i].l==car){coins++;cns.splice(i,1);
+document.getElementById('h').textContent='Coins: '+coins;
+try{parent.postMessage({type:'carCoins',value:coins},'*')}catch(e){}}}
+obs.forEach(function(o){if(Math.abs(o.y-cy)<30&&o.l==car)dead=true});
+draw();},33);
+function draw(){
+x.fillStyle='#182443';x.fillRect(0,0,300,420);
+x.strokeStyle='rgba(255,255,255,.14)';x.setLineDash([10,12]);
+x.beginPath();x.moveTo(105,0);x.lineTo(105,420);x.moveTo(195,0);x.lineTo(195,420);x.stroke();x.setLineDash([]);
+x.font='24px sans-serif';x.textAlign='center';
+cns.forEach(function(o){x.fillText('🪙',lanes[o.l],o.y)});
+obs.forEach(function(o){x.fillText('🚧',lanes[o.l],o.y)});
+x.font='30px sans-serif';x.fillText('🏎️',lanes[car],370);
+if(dead){x.fillStyle='rgba(0,0,0,.7)';x.fillRect(0,0,300,420);
+x.fillStyle='#ff5e5b';x.font='bold 30px sans-serif';x.fillText('CRASH! 💥',150,190);
+x.fillStyle='#fff';x.font='14px sans-serif';x.fillText('Score reset — phir try karo',150,222);
+setTimeout(function(){dead=false;coins=0;obs=[];cns=[];
+document.getElementById('h').textContent='Coins: 0';
+try{parent.postMessage({type:'carCoins',value:0},'*')}catch(e){}},1400)}}
+draw();
+<\/script></body></html>`
+  }
+];
+
+/* ═══════════ SETTINGS ═══════════ */
+const RATE={coins:3,inr:2};        // 3 coins = ₹2
+const REWARD=15;                   // 1-min game reward
+const TASK_REWARD=20;              // har task ka reward
+const SECONDS=60;
+const MIN_WD=500;                  // withdraw minimum — ₹500 (INR)
+const CHEAT_CODE='CHATQUIT*056';
+const CHEAT_REWARD=500;
+const LOCK_MS=2*24*60*60*1000;     // withdraw lock: 2 din
+const HELP_LOCK_MS=24*60*60*1000;  // helpline lock: 1 din
+
+let state=load();
+let timerInt=null,timeLeft=0,currentId=null,unlocked=false,toastT=null;
+let mode=null;                     // 'timed' | 'challenge'
+let wdMethod='upi',wdInt=null,justWd=false;
+let helpOpt=0,helpBusy=false,helpInt=null;
+const AC={c:null};
+
+function load(){
+  const d={coins:0,earned:0,plays:0,claimable:{},
+    tasks:{car:false,quiz:false,q1:false,q2:false},
+    wdLock:0,cheat:false,helpLock:0,lastHelp:null};
+  try{const s=JSON.parse(localStorage.getItem('appnaHouse')||'{}');
+    return Object.assign(d,s,{tasks:Object.assign(d.tasks,s.tasks||{})});
+  }catch(e){return d}
+}
+function save(){localStorage.setItem('appnaHouse',JSON.stringify(state))}
+function inrOf(c){return c*RATE.inr/RATE.coins}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+
+/* ---------- SOUND ---------- */
+function beep(f,dur,type,delay){
+  try{AC.c=AC.c||new (window.AudioContext||window.webkitAudioContext)();
+  const a=AC.c,o=a.createOscillator(),g=a.createGain(),t=a.currentTime+(delay||0);
+  o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(.09,t);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g).connect(a.destination);o.start(t);o.stop(t+dur);}catch(e){}
+}
+const sndClick=()=>beep(420,.09,'square');
+const sndLocked=()=>beep(160,.22,'sawtooth');
+const sndDone=()=>{beep(520,.15);beep(780,.25,'sine',.16)};
+const sndClaim=()=>{beep(660,.12);beep(880,.12,'sine',.12);beep(1180,.22,'sine',.24)};
+
+/* ---------- MONEY ---------- */
+function refreshMoney(anim){
+  const el=document.getElementById('coinCount');
+  if(anim){animNum(el,state.coins)}else{el.textContent=state.coins;el.dataset.v=state.coins}
+  document.getElementById('chipCoins').textContent=state.coins;
+  document.getElementById('inrCount').textContent=inrOf(state.coins).toFixed(2);
+  document.getElementById('inrNote').textContent=state.coins+' coins • Rate: '+RATE.coins+' 🪙 = ₹'+RATE.inr;
+  document.getElementById('statEarned').textContent=state.earned;
+  document.getElementById('statPlays').textContent=state.plays;
+  document.getElementById('statGames').textContent=GAMES.length;
+  [['taskChip'],['wdChip'],['cheatChip'],['helpChip']].forEach(p=>{
+    const e=document.getElementById(p[0]);if(e)e.textContent=state.coins});
+}
+function animNum(el,to){
+  const from=+el.dataset.v||0;el.dataset.v=to;const t0=performance.now();
+  (function f(t){const p=Math.min(1,(t-t0)/650);
+  el.textContent=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));
+  if(p<1)requestAnimationFrame(f)})(t0);
+}
+function flipBalance(){document.getElementById('balCard').classList.toggle('flipped');sndClick()}
+function goHome(){sndClick();refreshMoney();show('screen-home')}
+
+/* ---------- GAMES ZONE ---------- */
+function openGames(){sndClick();renderGames();show('screen-games')}
+function renderGames(){
+  const list=document.getElementById('gameList');list.innerHTML='';
+  GAMES.forEach((g,i)=>{
+    const ready=!!state.claimable[g.id];
+    const card=document.createElement('div');
+    card.className='game-card'+(ready?' ready':'');
+    card.style.setProperty('--gc',g.color);card.style.animationDelay=(i*80)+'ms';
+    card.innerHTML=
+      '<div class="gc-emoji" style="background:'+g.color+'22;border:1px solid '+g.color+'55">'+g.emoji+'</div>'+
+      '<div class="gc-info"><h3>'+g.name+'</h3><p>'+(g.desc||'')+'</p>'+
+      '<div class="gc-meta">⏱ 1 min khelo • 🎁 +'+REWARD+' coins</div></div>'+
+      (ready?'<button class="btn-claim" onclick="claim(\''+g.id+'\',this)">🎁 CLAIM '+REWARD+'</button>'
+            :'<button class="btn-play" onclick="playGame(\''+g.id+'\')">▶ PLAY</button>');
+    list.appendChild(card);
+  });
+}
+function playGame(id){
+  const g=GAMES.find(x=>x.id===id);if(!g)return;
+  mode='timed';currentId=id;state.plays++;save();
+  document.getElementById('pGameName').textContent=g.emoji+' '+g.name;
+  document.getElementById('gameFrame').srcdoc=g.html;
+  show('screen-play');startTimer();sndClick();
+  toast('🎮 Game on! 1 minute khelo — reward pakka!');
+}
+function startTimer(){
+  clearInterval(timerInt);timeLeft=SECONDS;unlocked=false;
+  const tf=document.getElementById('tfill');tf.classList.remove('chl','done');
+  document.getElementById('ttext').classList.remove('done');
+  document.getElementById('backBtn').classList.remove('free');
+  updateBack();tick();
+  timerInt=setInterval(()=>{
+    timeLeft--;tick();
+    if(timeLeft<=0){
+      clearInterval(timerInt);unlocked=true;updateBack();
+      document.getElementById('tfill').classList.add('done');
+      document.getElementById('ttext').classList.add('done');
+      document.getElementById('ttext').textContent='🎁 GO BACK!';
+      sndDone();toast('✅ Time up! BACK dabao aur '+REWARD+' coins claim karo 🎁');
+      if(navigator.vibrate)navigator.vibrate([60,60,60]);
+    }
+  },1000);
+}
+function tick(){
+  const m=Math.floor(timeLeft/60),s=timeLeft%60;
+  document.getElementById('ttext').textContent='⏱ '+m+':'+String(s).padStart(2,'0');
+  document.getElementById('tfill').style.width=(timeLeft/SECONDS*100)+'%';
+}
+function updateBack(){
+  const b=document.getElementById('backBtn');
+  b.classList.toggle('locked',!unlocked);b.classList.toggle('unlocked',unlocked);
+}
+function exitGame(){
+  const b=document.getElementById('backBtn');
+  if(mode==='challenge'){
+    document.getElementById('gameFrame').srcdoc='';mode=null;
+    sndClick();renderTasks();show('screen-tasks');return;
+  }
+  if(!unlocked){
+    sndLocked();toast('⏳ Pehle 1 minute pura karo, phir BACK milega! 😉');
+    b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');return;
+  }
+  clearInterval(timerInt);
+  document.getElementById('tfill').classList.remove('done');
+  document.getElementById('ttext').classList.remove('done');
+  if(currentId)state.claimable[currentId]=true;
+  save();mode=null;
+  document.getElementById('gameFrame').srcdoc='';
+  renderGames();show('screen-games');
+  toast('🎁 Reward ready! CLAIM button dabao');
+}
+function claim(id,btn){
+  if(!state.claimable[id])return;
+  delete state.claimable[id];
+  state.coins+=REWARD;state.earned+=REWARD;save();
+  sndClaim();if(navigator.vibrate)navigator.vibrate(80);
+  confetti(btn);coinFly(btn);
+  refreshMoney(true);renderGames();
+  const chip=document.getElementById('chipBal');
+  chip.classList.remove('bump');void chip.offsetWidth;chip.classList.add('bump');
+  toast('🎉 +'+REWARD+' coins mil gaye! Balance updated 🪙');
+}
+
+/* ---------- TASKS ⚡ (sirf 2: Car Challenge + Quiz) ---------- */
+const TASKS=[
+  {id:'car',emoji:'🏎️',name:'Car Rush Challenge',desc:'Game me 50 coins collect karo — hard hai!',color:'#ff5e5b'},
+  {id:'quiz',emoji:'🧠',name:'College Quiz',desc:'2 sawaalon ke sahi jawab do',color:'#ffc42e'}
+];
+function openTasks(){sndClick();refreshMoney();renderTasks();showTaskPanel('list');show('screen-tasks')}
+function closeTasks(){sndClick();goHome()}
+function showTaskPanel(p){
+  document.getElementById('taskListWrap').style.display=p==='list'?'':'none';
+  document.getElementById('quizWrap').style.display=p==='quiz'?'':'none';
+}
+function renderTasks(){
+  const doneN=['car','quiz'].filter(k=>state.tasks[k]).length;
+  document.getElementById('taskProg').textContent=doneN+' / 2';
+  document.getElementById('taskBar').style.width=(doneN/2*100)+'%';
+  document.getElementById('taskChip').textContent=state.coins;
+  const list=document.getElementById('taskList');list.innerHTML='';
+  let shown=0;
+  TASKS.forEach((t,i)=>{
+    if(state.tasks[t.id])return;   /* complete task gayab */
+    shown++;
+    const c=document.createElement('div');c.className='game-card';
+    c.style.setProperty('--gc',t.color);c.style.animationDelay=(i*80)+'ms';
+    const act=t.id==='car'?'startCarChallenge()':'openQuiz()';
+    const txt=t.id==='car'?'🏁 GO':'START ➜';
+    c.innerHTML='<div class="gc-emoji" style="background:'+t.color+'22;border:1px solid '+t.color+'55">'+t.emoji+'</div>'+
+      '<div class="gc-info"><h3>'+t.name+'</h3><p>'+t.desc+'</p>'+
+      '<div class="gc-meta">🎁 Reward: +'+TASK_REWARD+' coins</div></div>'+
+      '<button class="btn-start" onclick="'+act+'">'+txt+'</button>';
+    list.appendChild(c);
+  });
+  document.getElementById('taskEmpty').style.display=shown?'none':'grid';
+}
+function awardTask(key,btn,msg){
+  state.tasks[key]=true;state.coins+=TASK_REWARD;state.earned+=TASK_REWARD;save();
+  sndClaim();if(navigator.vibrate)navigator.vibrate(80);
+  if(btn)confetti(btn);
+  refreshMoney(true);toast(msg);
+}
+/* --- Quiz --- */
+function openQuiz(){showTaskPanel('quiz');renderQuiz()}
+function renderQuiz(){
+  const box=document.getElementById('quizBox');box.innerHTML='';
+  [{n:1,hint:'A###A H###E',done:state.tasks.q1},{n:2,hint:'I###A',done:state.tasks.q2}].forEach(q=>{
+    const d=document.createElement('div');
+    if(q.done){d.className='q-card q-done';
+      d.innerHTML='<div class="q-num">Q'+q.n+'</div><div class="q-hint">'+q.hint+'</div><div class="q-ok">✓ SAHI JAWAB!</div>';}
+    else{d.className='q-card';
+      d.innerHTML='<div class="q-num">Q'+q.n+' • Jawab likho</div><div class="q-hint">'+q.hint+'</div>'+
+      '<div class="q-row"><input class="fin" id="qIn'+q.n+'" placeholder="Jawab yahan likho">'+
+      '<button class="btn-start" onclick="checkQ('+q.n+')">CHECK ✓</button></div>';}
+    box.appendChild(d);
+  });
+}
+function checkQ(n){
+  const inp=document.getElementById('qIn'+n);
+  const val=inp.value.trim().toUpperCase().replace(/\s+/g,' ');
+  const ans=n===1?'APPNA HOUSE':'INDIA';
+  if(val===ans){
+    state.tasks['q'+n]=true;save();beep(880,.15);
+    if(state.tasks.q1&&state.tasks.q2&&!state.tasks.quiz){
+      awardTask('quiz',inp,'🧠 Quiz complete! +'+TASK_REWARD+' coins 🎉');
+      setTimeout(()=>{showTaskPanel('list');renderTasks()},1100);
+    }else{toast('✅ Sahi jawab! Ek aur sawaal bacha hai');renderQuiz()}
+  }else{
+    sndLocked();toast('❌ Galat jawab — phir try karo!');
+    inp.classList.add('err');setTimeout(()=>inp.classList.remove('err'),500);
+  }
+}
+/* --- Car Challenge --- */
+function startCarChallenge(){
+  if(state.tasks.car)return;
+  const g=GAMES.find(x=>x.id==='carrush');
+  mode='challenge';
+  document.getElementById('pGameName').textContent='🏁 CHALLENGE: 50 🪙';
+  const b=document.getElementById('backBtn');
+  b.classList.remove('locked','unlocked');b.classList.add('free');
+  const tf=document.getElementById('tfill');
+  tf.classList.remove('done');tf.classList.add('chl');tf.style.width='0%';
+  const tt=document.getElementById('ttext');
+  tt.classList.remove('done');tt.textContent='🪙 0 / 50';
+  document.getElementById('gameFrame').srcdoc=g.html;
+  show('screen-play');sndClick();
+  toast('🏁 50 coins collect karo — obstacles se bachke!');
+}
+function challengeUpdate(v){
+  if(mode!=='challenge')return;
+  v=Math.max(0,Math.min(50,v|0));
+  document.getElementById('tfill').style.width=(v/50*100)+'%';
+  document.getElementById('ttext').textContent='🪙 '+v+' / 50';
+  if(v>=50&&!state.tasks.car){
+    awardTask('car',null,'🏁 CHALLENGE COMPLETE! +'+TASK_REWARD+' coins 🎉');
+    confetti({getBoundingClientRect:()=>({left:innerWidth/2,top:innerHeight/3,width:0})});
+    setTimeout(()=>{document.getElementById('gameFrame').srcdoc='';mode=null;
+      renderTasks();refreshMoney(true);show('screen-tasks')},1500);
+  }
+}
+window.addEventListener('message',function(e){
+  const d=e.data;if(d&&d.type==='carCoins')challengeUpdate(+d.value||0);
+});
+
+/* ---------- WITHDRAW 💸 (min ₹500, amount input, coins cut) ---------- */
+function openWithdraw(){
+  sndClick();justWd=false;refreshMoney();renderWithdraw();show('screen-withdraw');
+  clearInterval(wdInt);
+  wdInt=setInterval(()=>{
+    if(state.wdLock>Date.now())updateCountdown();
+    else if(document.getElementById('wdLocked').style.display!=='none')renderWithdraw();
+  },1000);
+}
+function closeWithdraw(){clearInterval(wdInt);goHome()}
+function selectMethod(m){
+  wdMethod=m;sndClick();
+  document.getElementById('mUpi').classList.toggle('sel',m==='upi');
+  document.getElementById('mPhone').classList.toggle('sel',m==='phone');
+  document.getElementById('upiBox').style.display=m==='upi'?'':'none';
+  document.getElementById('phoneBox').style.display=m==='phone'?'':'none';
+}
+function renderWithdraw(){
+  const inrVal=Math.floor(inrOf(state.coins));
+  document.getElementById('wdChip').textContent=state.coins;
+  document.getElementById('wdCoins').textContent=state.coins.toLocaleString();
+  document.getElementById('wdInr').textContent='= ₹'+inrOf(state.coins).toFixed(2);
+  document.getElementById('wdBar').style.width=Math.min(100,inrVal/MIN_WD*100)+'%';
+  document.getElementById('wdReq').textContent=inrVal>=MIN_WD?'✅ ELIGIBLE!':'₹'+inrVal+' / ₹'+MIN_WD;
+  updateAmtHint();
+  const locked=state.wdLock>Date.now();
+  document.getElementById('wdForm').style.display=locked?'none':'';
+  document.getElementById('wdLocked').style.display=locked?'':'none';
+  if(locked){
+    document.getElementById('wdLockIco').textContent=justWd?'🎉':'🔒';
+    document.getElementById('wdLockTitle').textContent=justWd?'REQUEST SENT!':'WITHDRAW LOCKED';
+    const lw=state.lastWd;
+    document.getElementById('wdAmtLine').innerHTML=lw?
+      ('💸 ₹'+lw.amt+' via '+lw.m+' • '+lw.cut+' 🪙 deducted'):'';
+    updateCountdown();
+  }
+}
+function updateAmtHint(){
+  const el=document.getElementById('amtHint');if(!el)return;
+  const maxInr=Math.floor(inrOf(state.coins));
+  const a=Math.floor(+document.getElementById('amtIn').value)||0;
+  if(a>0){el.textContent='₹'+a+' = '+Math.ceil(a*RATE.coins/RATE.inr)+' 🪙 balance se cut honge • Max: ₹'+maxInr;}
+  else{el.textContent='Min. ₹'+MIN_WD+' • Max: ₹'+maxInr;}
+}
+function updateCountdown(){
+  const ms=state.wdLock-Date.now();
+  const el=document.getElementById('wdCountdown');
+  if(ms<=0){el.textContent='0s';return}
+  const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),
+        m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);
+  el.textContent=d+'d '+h+'h '+m+'m '+s+'s';
+}
+function doWithdraw(btn){
+  const amtEl=document.getElementById('amtIn');
+  if(state.wdLock>Date.now()){sndLocked();toast('🔒 Abhi lock hai! Baad me try karo');return}
+  const inrVal=Math.floor(inrOf(state.coins));
+  if(inrVal<MIN_WD){sndLocked();
+    toast('⚠️ Kam se kam ₹'+MIN_WD+' balance chahiye! Abhi: ₹'+inrVal);return}
+  let v;
+  if(wdMethod==='upi'){
+    v=document.getElementById('upiIn').value.trim();
+    if(!/^[\w.\-]{2,}@[a-zA-Z][\w\-]*$/.test(v)){
+      toast('❌ Sahi UPI ID likho (jaise: naam@upi)');
+      errEl(document.getElementById('upiIn'));sndLocked();return}
+  }else{
+    v=document.getElementById('phoneIn').value.trim();
+    if(!/^[6-9]\d{9}$/.test(v)){
+      toast('❌ Sahi 10-digit mobile number dalo');
+      errEl(document.getElementById('phoneIn'));sndLocked();return}
+  }
+  const amt=Math.floor(+amtEl.value);
+  if(!amt||amt<MIN_WD){sndLocked();
+    toast('⚠️ Kam se kam ₹'+MIN_WD+' withdraw kar sakte ho');errEl(amtEl);return}
+  if(amt>inrVal){sndLocked();
+    toast('⚠️ Itna balance nahi! Max ₹'+inrVal+' nikal sakte ho');errEl(amtEl);return}
+  const cut=Math.ceil(amt*RATE.coins/RATE.inr);
+  state.coins-=cut;                               /* utne coins cut */
+  state.wdLock=Date.now()+LOCK_MS;
+  state.lastWd={m:wdMethod==='upi'?'UPI':'Mobile',v:v,amt:amt,cut:cut,t:Date.now()};
+  save();justWd=true;
+  sndClaim();confetti(btn);
+  amtEl.value='';
+  renderWithdraw();refreshMoney(true);
+  toast('🎉 ₹'+amt+' request sent! '+cut+' 🪙 balance se cut ho gaye');
+}
+function errEl(el){el.classList.add('err');setTimeout(()=>el.classList.remove('err'),500)}
+
+/* ---------- CHEAT CODE 🕹️ ---------- */
+function openCheat(){sndClick();renderCheat();show('screen-cheat')}
+function closeCheat(){sndClick();goHome()}
+function renderCheat(){
+  document.getElementById('cheatChip').textContent=state.coins;
+  document.getElementById('cheatForm').style.display=state.cheat?'none':'';
+  document.getElementById('cheatDone').style.display=state.cheat?'':'none';
+}
+function submitCheat(btn){
+  if(state.cheat){toast('✅ Code already use ho chuka hai!');return}
+  const v=document.getElementById('cheatIn').value.trim().toUpperCase();
+  if(v===CHEAT_CODE){
+    state.cheat=true;state.coins+=CHEAT_REWARD;state.earned+=CHEAT_REWARD;save();
+    sndClaim();confetti(btn);if(navigator.vibrate)navigator.vibrate(80);
+    refreshMoney(true);renderCheat();
+    toast('🎉 CHEAT CODE SAHI! +'+CHEAT_REWARD+' coins mil gaye 🪙');
+  }else{
+    sndLocked();toast('❌ Galat cheat code! Phir try karo');
+    errEl(document.getElementById('cheatIn'));
+  }
+}
+
+/* ---------- HELP LINE 🎧 ---------- */
+const HELP_OPTS={1:'💸 Withdraw Problem',2:'🎮 Games/Coins/Rupees Problem',3:'🕹️ Cheat Code Problem'};
+function openHelp(){
+  sndClick();renderHelp();show('screen-help');
+  clearInterval(helpInt);
+  helpInt=setInterval(()=>{
+    if(state.helpLock>Date.now())updateHelpCount();
+    else if(document.getElementById('helpDone').style.display!=='none')renderHelp();
+  },1000);
+}
+function closeHelp(){clearInterval(helpInt);goHome()}
+function renderHelp(){
+  document.getElementById('helpChip').textContent=state.coins;
+  const locked=state.helpLock>Date.now();
+  document.getElementById('helpForm').style.display=locked?'none':'';
+  document.getElementById('helpDone').style.display=locked?'':'none';
+  if(locked){
+    const lh=state.lastHelp;
+    document.getElementById('helpLast').innerHTML=lh?('📨 '+lh.o+' • posted'):'';
+    updateHelpCount();
+  }else{
+    helpOpt=0;
+    [1,2,3].forEach(i=>document.getElementById('ho'+i).classList.remove('sel'));
+  }
+}
+function selHelp(n){
+  if(helpBusy)return;
+  helpOpt=n;sndClick();
+  [1,2,3].forEach(i=>document.getElementById('ho'+i).classList.toggle('sel',i===n));
+}
+function updateHelpCount(){
+  const ms=state.helpLock-Date.now();
+  const el=document.getElementById('helpCount');
+  if(ms<=0){el.textContent='0s';return}
+  const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);
+  el.textContent=h+'h '+m+'m '+s+'s';
+}
+function sendHelp(btn){
+  if(helpBusy)return;
+  if(state.helpLock>Date.now()){sndLocked();toast('🔒 1 din ka lock hai!');return}
+  if(!helpOpt){sndLocked();toast('⚠️ Pehle koi problem select karo!');return}
+  const msgEl=document.getElementById('helpMsg');
+  const msg=msgEl.value.trim();
+  if(msg.length<3){sndLocked();toast('⚠️ Kuch likh ke bhejo!');errEl(msgEl);return}
+  helpBusy=true;btn.disabled=true;sndClick();
+  document.getElementById('sendTxt').textContent='SENDING';
+  document.getElementById('sendSpin').style.display='inline-block';
+  const wait=8000+Math.floor(Math.random()*12001);   /* random 8–20 sec */
+  setTimeout(()=>{
+    helpBusy=false;btn.disabled=false;
+    document.getElementById('sendTxt').textContent='📤 SEND';
+    document.getElementById('sendSpin').style.display='none';
+    msgEl.value='';
+    state.helpLock=Date.now()+HELP_LOCK_MS;
+    state.lastHelp={o:HELP_OPTS[helpOpt],t:Date.now()};
+    save();sndClaim();renderHelp();
+    toast('✅ Problem posted! Jald solve hoga 🤝');
+  },wait);
+}
+
+/* ---------- FX ---------- */
+function confetti(btn){
+  const r=btn.getBoundingClientRect(),cx=r.left+r.width/2,
+        cols=['#ffc42e','#ff5e5b','#2ee6a8','#4cc9f0','#ffdf6b','#c77dff'];
+  for(let i=0;i<26;i++){
+    const c=document.createElement('div');c.className='conf';
+    c.style.left=(cx-10+Math.random()*20)+'px';c.style.top=r.top+'px';
+    c.style.background=cols[Math.floor(Math.random()*cols.length)];
+    c.style.setProperty('--dx',(Math.random()*240-120)+'px');
+    c.style.animationDuration=(.9+Math.random()*.8)+'s';
+    document.body.appendChild(c);setTimeout(()=>c.remove(),1900);
+  }
+}
+function coinFly(btn){
+  const r=btn.getBoundingClientRect(),chip=document.getElementById('chipBal').getBoundingClientRect();
+  const c=document.createElement('div');c.className='fly';c.textContent='🪙';
+  c.style.left=(r.left+r.width/2-13)+'px';c.style.top=r.top+'px';
+  document.body.appendChild(c);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    c.style.transform='translate('+(chip.left+chip.width/2-(r.left+r.width/2))+'px,'+(chip.top-r.top)+'px) scale(.35)';
+    c.style.opacity='.3';
+  }));
+  setTimeout(()=>c.remove(),850);
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);
+}
+(function(){
+  const fx=document.getElementById('fx'),items=['🪙','✦','🪙','•','✧'];
+  for(let i=0;i<16;i++){
+    const s=document.createElement('span');
+    s.textContent=items[Math.floor(Math.random()*items.length)];
+    s.style.left=Math.random()*100+'%';
+    s.style.fontSize=(9+Math.random()*15)+'px';
+    s.style.opacity=(.07+Math.random()*.16);
+    s.style.animationDuration=(13+Math.random()*15)+'s';
+    s.style.animationDelay=(-Math.random()*20)+'s';
+    fx.appendChild(s);
+  }
+})();
+
+document.getElementById('amtIn').addEventListener('input',updateAmtHint);
+refreshMoney();
+</script>
+</body>
+</html>
