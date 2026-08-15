@@ -32,7 +32,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
 .screen{position:fixed;inset:0;display:none;flex-direction:column;z-index:2;overflow-y:auto}
 .screen.active{display:flex;animation:screenIn .45s cubic-bezier(.22,1,.36,1)}
 @keyframes screenIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
-.wrap{max-width:520px;margin:0 auto;width:100%;padding:18px 18px 44px}
+.wrap{max-width:520px;margin:0 auto;width:100%;padding:18px 18px 90px}
 ::-webkit-scrollbar{width:0;height:0}
 
 /* ---------- HOME ---------- */
@@ -95,7 +95,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
 .tasks-btn:active{transform:scale(.95)}
 .tb-tag{font-family:'Baloo 2';font-size:11px;font-weight:800;background:rgba(4,48,60,.22);padding:3px 9px;border-radius:99px}
 
-/* ---------- SHARE ---------- */
 .share-btn{width:100%;margin-top:12px;border:none;cursor:pointer;font-family:'Bungee';font-size:16px;
   letter-spacing:1px;color:#3c0a14;background:linear-gradient(180deg,#ffb3c1,#ff5e7a 55%,#e6385c);
   padding:16px;border-radius:18px;display:flex;justify-content:center;align-items:center;gap:10px;
@@ -292,8 +291,49 @@ textarea.fin{resize:none;line-height:1.5}
   border-radius:50%;animation:rot .8s linear infinite;display:inline-block;flex:none}
 @keyframes rot{to{transform:rotate(360deg)}}
 
+/* ---------- ADS ---------- */
+#ad-banner{position:fixed;bottom:0;left:0;right:0;height:55px;z-index:40;
+  background:rgba(12,19,34,.95);border-top:1px solid var(--border);display:flex;
+  align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+#ad-banner iframe{display:block}
+.native-slot{margin:13px 0;min-height:90px;border-radius:14px;
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  border:1px solid var(--border);padding:10px;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative}
+.native-slot::before{content:"ADVERTISEMENT";position:absolute;top:4px;left:8px;font-size:9px;
+  font-weight:800;letter-spacing:1.5px;color:var(--muted);opacity:.7;font-family:'Bungee'}
+.native-slot > div{width:100%}
+
+/* ---------- POPUNDER ---------- */
+#popunder{position:fixed;inset:0;z-index:100;background:rgba(3,6,15,.92);display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  backdrop-filter:blur(8px);padding:20px}
+#popunder.show{display:flex;animation:puIn .35s}
+@keyframes puIn{from{opacity:0}to{opacity:1}}
+.pu-head{width:100%;max-width:360px;display:flex;justify-content:space-between;align-items:center}
+.pu-timer-wrap{display:flex;align-items:center;gap:10px}
+.pu-timer{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ff5e5b,#d82a2a);
+  color:#fff;font-family:'Bungee';font-size:22px;display:grid;place-items:center;
+  box-shadow:0 0 0 0 rgba(255,94,91,.7);animation:puPulse 1s infinite}
+@keyframes puPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,94,91,.7)}50%{box-shadow:0 0 0 14px rgba(255,94,91,0)}}
+.pu-timer.ready{background:linear-gradient(135deg,#54f0a8,#0fae62);animation:none}
+.pu-label{font-family:'Bungee';font-size:12px;letter-spacing:1px;color:var(--muted)}
+.pu-label b{display:block;color:var(--text);font-size:14px}
+.pu-close{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);
+  background:var(--panel2);color:#fff;font-size:20px;font-weight:bold;cursor:pointer;
+  display:grid;place-items:center;transition:.2s}
+.pu-close:disabled{opacity:.35;cursor:not-allowed}
+.pu-close:not(:disabled){background:linear-gradient(135deg,#54f0a8,#0fae62);color:#04301c;
+  border:none;box-shadow:0 6px 18px rgba(46,230,168,.4)}
+.pu-close:not(:disabled):active{transform:scale(.9)}
+.pu-ad{width:100%;max-width:360px;min-height:320px;background:var(--panel);
+  border:1px solid var(--border);border-radius:16px;padding:14px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.pu-ad-label{text-align:center;font-size:11px;font-weight:800;color:var(--muted);letter-spacing:1.5px;margin-bottom:10px}
+.pu-ad > div{width:100%}
+
 /* ---------- TOAST / FX ---------- */
-#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(90px);
   background:#1d2b4d;border:1px solid rgba(255,196,46,.3);padding:12px 22px;border-radius:99px;
   font-size:13.5px;font-weight:700;z-index:99;transition:.35s;opacity:0;max-width:90%;text-align:center;
   box-shadow:0 14px 34px rgba(0,0,0,.55)}
@@ -334,7 +374,6 @@ textarea.fin{resize:none;line-height:1.5}
     <button class="play-btn" onclick="openGames()"><span class="pb-ico">🎮</span> PLAY GAMES <span class="pb-arrow">➜</span></button>
     <button class="tasks-btn" onclick="openTasks()">⚡ COMPLETE TASKS <span class="tb-tag">+20 🪙 each</span> <span class="pb-arrow">➜</span></button>
 
-    <!-- ── SHARE SECTION ── -->
     <button class="share-btn" id="shareBtn" onclick="copyLink(this)">📤 SHARE <span class="tb-tag">Link copy karo</span></button>
     <button class="wa-btn" onclick="shareWhatsApp()">💬 SHARE ON WHATSAPP <span class="pb-arrow">➜</span></button>
     <div class="qr-card">
@@ -375,6 +414,12 @@ textarea.fin{resize:none;line-height:1.5}
   <div class="wrap">
     <p class="gsub">⏱ 1 minute khelo → wapas aao → 🎁 15 coins claim karo!</p>
     <div id="gameList"></div>
+    
+    <!-- SINGLE VISIBLE SOURCE AD (Prevents refresh loops) -->
+    <div id="native-ad-source" class="native-slot" style="margin-top:20px;">
+      <script async="async" data-cfasync="false" src="https://pl30844004.effectivecpmnetwork.com/f0d87f3d061186a56ffa11e0d8a864b8/invoke.js"></script>
+      <div id="container-f0d87f3d061186a56ffa11e0d8a864b8"></div>
+    </div>
   </div>
 </section>
 
@@ -393,6 +438,11 @@ textarea.fin{resize:none;line-height:1.5}
     <div id="taskListWrap"><div id="taskList"></div>
       <div id="taskEmpty" class="empty" style="display:none"><b>🎉</b><span>Wah! Saare tasks complete ho gaye!<br>Ab games khel ke aur coins kamao 🎮</span></div>
     </div>
+    
+    <div class="native-slot" style="margin-top:20px;">
+      <div id="container-f0d87f3d061186a56ffa11e0d8a864b8-tasks" style="width:100%"></div>
+    </div>
+
     <div id="quizWrap" style="display:none">
       <div class="sub-back" onclick="showTaskPanel('list')">← Tasks pe wapas</div>
       <div class="wd-card">
@@ -525,16 +575,46 @@ textarea.fin{resize:none;line-height:1.5}
 
 <div id="toast"></div>
 
+<!-- ═══════════ POPUNDER AD MODAL ═══════════ -->
+<div id="popunder">
+  <div class="pu-head">
+    <div class="pu-timer-wrap">
+      <div class="pu-timer" id="puTimer">10</div>
+      <div class="pu-label">Wait please<b id="puLabel">Sponsored Ad</b></div>
+    </div>
+    <button class="pu-close" id="puClose" disabled onclick="closePopunder()">✕</button>
+  </div>
+  <div class="pu-ad">
+    <div class="pu-ad-label">ADVERTISEMENT</div>
+    <div id="popunder-ad-content" style="width:100%; display:flex; justify-content:center;"></div>
+  </div>
+</div>
+
+<!-- ═══════════ BANNER AD (fixed bottom) ═══════════ -->
+<div id="ad-banner">
+  <script>
+    atOptions = {
+      'key' : '5f79d3acf73ff61092f7c0ffa91f6c0d',
+      'format' : 'iframe',
+      'height' : 50,
+      'width' : 320,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highperformanceformat.com/5f79d3acf73ff61092f7c0ffa91f6c0d/invoke.js"></script>
+</div>
+
 <script>
 /* ═══════════════════════════════════════════════════════════════
    🎮🎮  APNE GAMES YAHAN ADD KARO  🎮🎮
-   { id:"unique-naam", name:"Game Ka Naam", emoji:"🚀",
-     color:"#ff5e5b", desc:"Description",
-     html:`YAHAN PURA HTML GAME CODE PASTE KARO` },
    ═══════════════════════════════════════════════════════════════ */
 const GAMES = [
+  // ═══════════════ GAME 1: SNAKE MASTER ═══════════════
   {
-    id: "snake", name: "Snake Master", emoji: "🐍", color: "#2ee6a8",
+    id: "snake",
+    name: "Snake Master",
+    emoji: "🐍",
+    color: "#2ee6a8",
     desc: "Saap ko khana khilao, lamba banao!",
     html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
 body{margin:0;background:#0b1120;color:#fff;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden}
@@ -563,8 +643,13 @@ if(dead){x.fillStyle='rgba(0,0,0,.65)';x.fillRect(0,0,280,280);x.fillStyle='#ff5
 draw();
 <\/script></body></html>`
   },
+
+  // ═══════════════ GAME 2: COIN CATCHER ═══════════════
   {
-    id: "coincatch", name: "Coin Catcher", emoji: "🪙", color: "#ffc42e",
+    id: "coincatch",
+    name: "Coin Catcher",
+    emoji: "🪙",
+    color: "#ffc42e",
     desc: "Girte coins ko tap karke pakdo!",
     html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
 body{margin:0;height:100vh;overflow:hidden;background:linear-gradient(#1a2440,#0b1120);font-family:sans-serif}
@@ -579,7 +664,7 @@ body{margin:0;height:100vh;overflow:hidden;background:linear-gradient(#1a2440,#0
 <script>
 var sc=0;
 setInterval(function(){var c=document.createElement('div');c.className='coin';
-c.textContent=Math.random()<.15?'💎':'';
+c.textContent=Math.random()<.15?'💎':'🪙';
 c.style.left=Math.random()*88+'%';
 c.style.animationDuration=(2.2+Math.random()*2)+'s';
 c.onpointerdown=function(){sc+=c.textContent=='💎'?5:1;
@@ -589,8 +674,13 @@ c.addEventListener('animationend',function(){c.remove()});
 document.body.appendChild(c)},620);
 <\/script></body></html>`
   },
+
+  // ═══════════════ GAME 3: BUBBLE POP ═══════════════
   {
-    id: "bubblepop", name: "Bubble Pop", emoji: "🫧", color: "#4cc9f0",
+    id: "bubblepop",
+    name: "Bubble Pop",
+    emoji: "🫧",
+    color: "#4cc9f0",
     desc: "Bubbles phodo, score badhao!",
     html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
 body{margin:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 20%,#12304a,#04101c);font-family:sans-serif}
@@ -614,9 +704,13 @@ b.addEventListener('animationend',function(){b.remove()});
 document.body.appendChild(b)},520);
 <\/script></body></html>`
   },
+
+  // ═══════════════ GAME 4: CAR RUSH (Challenge me bhi use hota hai) ═══════════════
   {
-    /* ⚠ Ye game COMPLETE TASKS ke Car Challenge me bhi use hota hai (id mat badalna!) */
-    id: "carrush", name: "Car Rush", emoji: "🏎️", color: "#ff5e5b",
+    id: "carrush",
+    name: "Car Rush",
+    emoji: "🏎️",
+    color: "#ff5e5b",
     desc: "Coins pakdo, obstacles se bacho — crash = score ZERO!",
     html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
 body{margin:0;background:#111a2e;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
@@ -663,21 +757,780 @@ document.getElementById('h').textContent='Coins: 0';
 try{parent.postMessage({type:'carCoins',value:0},'*')}catch(e){}},1400)}}
 draw();
 <\/script></body></html>`
+  },
+
+  // ═══════════════ GAME 5: MEMORY MATCH (NEW!) ═══════════════
+  {
+    id: "memory",
+    name: "Memory Match",
+    emoji: "🧠",
+    color: "#c77dff",
+    desc: "Cards match karo — memory test!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(135deg,#1a2440,#0b1120);color:#fff;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden}
+#hud{font-size:18px;font-weight:bold;color:#c77dff;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(4,65px);gap:8px}
+.card{width:65px;height:65px;border-radius:12px;cursor:pointer;perspective:1000px;position:relative}
+.card-inner{width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;position:relative}
+.card.flipped .card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.card-front{background:#22315a;color:#c77dff;border:2px solid #c77dff55}
+.card-back{background:#fff;transform:rotateY(180deg);border:2px solid #c77dff}
+.card.matched{pointer-events:none}
+.card.matched .card-back{background:#2ee6a8;animation:match .5s}
+@keyframes match{50%{transform:rotateY(180deg) scale(1.2)}}
+</style></head><body>
+<div id="hud">Moves: 0 • Pairs: 0/8</div>
+<div class="grid" id="grid"></div>
+<script>
+var emojis=['🎮','🎲','🎯','🏆','⭐','🎨','🎭','🎪'];
+var cards=[...emojis,...emojis].sort(()=>Math.random()-.5);
+var flipped=[],matched=0,moves=0,locked=false;
+var grid=document.getElementById('grid');
+cards.forEach(function(e,i){
+  var c=document.createElement('div');c.className='card';c.dataset.idx=i;
+  c.innerHTML='<div class="card-inner"><div class="card-front">?</div><div class="card-back">'+e+'</div></div>';
+  c.onclick=function(){flipCard(c,e)};
+  grid.appendChild(c);
+});
+function flipCard(c,e){
+  if(locked||c.classList.contains('flipped')||c.classList.contains('matched'))return;
+  c.classList.add('flipped');flipped.push({el:c,emoji:e});
+  if(flipped.length===2){
+    moves++;locked=true;
+    if(flipped[0].emoji===flipped[1].emoji){
+      flipped[0].el.classList.add('matched');flipped[1].el.classList.add('matched');
+      matched++;flipped=[];locked=false;
+    }else{
+      setTimeout(function(){
+        flipped[0].el.classList.remove('flipped');flipped[1].el.classList.remove('flipped');
+        flipped=[];locked=false;
+      },800);
+    }
+    document.getElementById('hud').textContent='Moves: '+moves+' • Pairs: '+matched+'/8';
+    if(matched===8)setTimeout(function(){document.getElementById('hud').textContent='🎉 WON in '+moves+' moves!'},500);
   }
+}
+<\/script></body></html>`
+  },
+
+  // ═══════════════ GAME 6: SPACE SHOOTER (NEW!) ═══════════════
+  {
+    id: "space",
+    name: "Space Shooter",
+    emoji: "🚀",
+    color: "#ff8a00",
+    desc: "Asteroids destroy karo, bachke raho!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:#000;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden}
+canvas{border:2px solid #ff8a00;border-radius:12px}
+#h{font-size:18px;font-weight:bold;color:#ff8a00;margin-bottom:8px}
+</style></head><body>
+<div id="h">Score: 0 • Lives: 3</div>
+<canvas id="c" width="320" height="480"></canvas>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d'),ship={x:160,y:440,w:30,h:20},bullets=[],asteroids=[],score=0,lives=3,keys={},gameOver=false;
+document.addEventListener('keydown',function(e){keys[e.key]=true});
+document.addEventListener('keyup',function(e){keys[e.key]=false});
+function shoot(){bullets.push({x:ship.x+13,y:ship.y-5,w:4,h:10,speed:8})}
+setInterval(function(){if(!gameOver)shoot()},250);
+function spawnAsteroid(){asteroids.push({x:Math.random()*290,y:-30,w:30,h:30,speed:2+Math.random()*2})}
+setInterval(function(){if(!gameOver)spawnAsteroid()},800);
+function update(){
+  if(gameOver)return;
+  if(keys['ArrowLeft']&&ship.x>0)ship.x-=5;
+  if(keys['ArrowRight']&&ship.x<290)ship.x+=5;
+  bullets.forEach(function(b){b.y-=b.speed});
+  bullets=bullets.filter(function(b){return b.y>-10});
+  asteroids.forEach(function(a){a.y+=a.speed});
+  for(var i=asteroids.length-1;i>=0;i--){
+    if(asteroids[i].y>500){asteroids.splice(i,1);continue}
+    if(asteroids[i].x<ship.x+ship.w&&asteroids[i].x+asteroids[i].w>ship.x&&
+       asteroids[i].y<ship.y+ship.h&&asteroids[i].y+asteroids[i].h>ship.y){
+      asteroids.splice(i,1);lives--;
+      if(lives===0){gameOver=true;x.fillStyle='rgba(0,0,0,.8)';x.fillRect(0,0,320,480);
+        x.fillStyle='#ff5e5b';x.font='bold 28px sans-serif';x.textAlign='center';x.fillText('GAME OVER',160,240);
+        x.fillStyle='#fff';x.font='16px sans-serif';x.fillText('Score: '+score,160,270)}
+    }
+  }
+  bullets.forEach(function(b){
+    for(var j=asteroids.length-1;j>=0;j--){
+      if(b.x<asteroids[j].x+asteroids[j].w&&b.x+b.w>asteroids[j].x&&
+         b.y<asteroids[j].y+asteroids[j].h&&b.y+b.h>asteroids[j].y){
+        asteroids.splice(j,1);score+=10;bullets.splice(bullets.indexOf(b),1);break}
+    }
+  });
+  document.getElementById('h').textContent='Score: '+score+' • Lives: '+lives;
+}
+function draw(){
+  if(gameOver)return;
+  x.fillStyle='#000';x.fillRect(0,0,320,480);
+  for(var i=0;i<50;i++){x.fillStyle='rgba(255,255,255,'+Math.random()*.5+')';
+    x.fillRect(Math.random()*320,Math.random()*480,2,2)}
+  x.fillStyle='#4cc9f0';x.beginPath();x.moveTo(ship.x+15,ship.y);
+  x.lineTo(ship.x,ship.y+ship.h);x.lineTo(ship.x+30,ship.y+ship.h);x.closePath();x.fill();
+  bullets.forEach(function(b){x.fillStyle='#ffc42e';x.fillRect(b.x,b.y,b.w,b.h)});
+  asteroids.forEach(function(a){x.fillStyle='#888';x.beginPath();x.arc(a.x+15,a.y+15,15,0,7);x.fill();
+    x.fillStyle='#555';x.beginPath();x.arc(a.x+8,a.y+8,4,0,7);x.fill();x.beginPath();x.arc(a.x+20,a.y+18,3,0,7);x.fill()});
+}
+setInterval(function(){update();draw()},33);
+<\/script></body></html>`
+  },
+
+  // ═══════════════ GAME 7: WHACK-A-MOLE (NEW!) ═══════════════
+  {
+    id: "whack",
+    name: "Whack-a-Mole",
+    emoji: "🐹",
+    color: "#ff5e5b",
+    desc: "Chuhe ko maro, score badhao!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(135deg,#8b4513,#654321);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden}
+#h{font-size:22px;font-weight:bold;color:#fff;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(3,90px);gap:12px}
+.hole{width:90px;height:90px;background:#2a1810;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;cursor:pointer;transition:all .1s;border:4px solid #1a0f08}
+.hole.active{background:#8b4513;transform:scale(1.1)}
+.hole.hit{background:#2ee6a8;transform:scale(1.2)}
+</style></head><body>
+<div id="h">Score: 0 • Time: 30</div>
+<div class="grid" id="grid"></div>
+<script>
+var score=0,time=30,grid=document.getElementById('grid'),holes=[];
+for(var i=0;i<9;i++){
+  var h=document.createElement('div');h.className='hole';h.dataset.idx=i;
+  h.onclick=function(){whack(this)};
+  grid.appendChild(h);holes.push(h);
+}
+function whack(h){
+  if(h.classList.contains('active')&&!h.classList.contains('hit')){
+    score++;h.classList.add('hit');h.textContent='';
+    setTimeout(function(){h.classList.remove('hit','active')},200);
+    document.getElementById('h').textContent='Score: '+score+' • Time: '+time;
+  }
+}
+setInterval(function(){
+  var active=holes.filter(function(h){return h.classList.contains('active')});
+  if(active.length<2){
+    var h=holes[Math.floor(Math.random()*9)];
+    if(!h.classList.contains('active')){
+      h.classList.add('active');h.textContent='🐹';
+      setTimeout(function(){h.classList.remove('active');h.textContent=''},1200);
+    }
+  }
+},500);
+var timer=setInterval(function(){
+  time--;
+  document.getElementById('h').textContent='Score: '+score+' • Time: '+time;
+  if(time===0){clearInterval(timer);document.getElementById('h').textContent='🎉 Final: '+score+' points!'}
+},1000);
+<\/script></body></html>`
+  },
+
+  // ═══════════════ GAME 8: COLOR MATCH (NEW!) ═══════════════
+  // ═══════════ 5. FLAPPY BIRD 🐦 (NEW!) ═══════════
+  {
+    id: "flappy", name: "Flappy Bird", emoji: "🐦", color: "#f0c14b",
+    desc: "Tap karke udo, pipes se bacho!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(#87CEEB,#4A90E2);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff;cursor:pointer}
+#s{font-size:28px;font-weight:bold;color:#fff;text-shadow:2px 2px 4px rgba(0,0,0,.5);margin-bottom:10px;z-index:10}
+canvas{border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.hint{position:fixed;bottom:20px;color:#fff;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px rgba(0,0,0,.5)}
+</style></head><body>
+<div id="s">Score: 0</div>
+<canvas id="c" width="320" height="480"></canvas>
+<div class="hint">👆 Tap anywhere to flap!</div>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d'),W=320,H=480;
+var bird={x:80,y:240,v:0,g:0.5},pipes=[],score=0,dead=false,started=false,fr=0;
+function tap(){if(!started){started=true;return}bird.v=-8}
+document.body.addEventListener('click',tap);
+document.body.addEventListener('touchstart',function(e){e.preventDefault();tap()});
+setInterval(function(){
+if(dead)return;
+if(!started){draw();return}
+bird.v+=bird.g;bird.y+=bird.v;
+if(bird.y>H-20||bird.y<0)die();
+fr++;
+if(fr%90==0){var gap=150,py=Math.random()*(H-gap-80)+40;
+pipes.push({x:W,y:py,h:gap})}
+pipes.forEach(function(p){p.x-=3;
+if(!p.passed&&p.x<80){p.passed=true;score++;document.getElementById('s').textContent='Score: '+score}
+if((p.x<100&&p.x>60)&&(bird.y<p.y||bird.y>p.y+p.h))die()});
+pipes=pipes.filter(function(p){return p.x>-60});
+draw()},33);
+function draw(){
+x.fillStyle='#87CEEB';x.fillRect(0,0,W,H);
+x.fillStyle='#8B4513';x.fillRect(0,H-20,W,20);
+pipes.forEach(function(p){
+x.fillStyle='#2ECC40';
+x.fillRect(p.x,0,50,p.y);
+x.fillRect(p.x,p.y+p.h,50,H-p.y-p.h);
+x.fillStyle='#27AE60';
+x.fillRect(p.x-5,p.y-20,60,20);
+x.fillRect(p.x-5,p.y+p.h,60,20)});
+x.save();x.translate(80,bird.y);
+x.rotate(Math.atan2(bird.v,10));
+x.fillStyle='#F39C12';x.beginPath();x.arc(0,0,15,0,7);x.fill();
+x.fillStyle='#fff';x.beginPath();x.arc(6,-5,6,0,7);x.fill();
+x.fillStyle='#000';x.beginPath();x.arc(8,-5,3,0,7);x.fill();
+x.fillStyle='#E74C3C';x.beginPath();x.moveTo(12,0);x.lineTo(20,-2);x.lineTo(20,2);x.fill();
+x.restore();
+if(dead){x.fillStyle='rgba(0,0,0,.7)';x.fillRect(0,0,W,H);
+x.fillStyle='#ff5e5b';x.font='bold 36px sans-serif';x.textAlign='center';x.fillText('GAME OVER!',160,220);
+x.fillStyle='#fff';x.font='20px sans-serif';x.fillText('Score: '+score,160,260);
+x.font='16px sans-serif';x.fillText('Tap to restart',160,300)}}
+function die(){dead=true;setTimeout(function(){dead=false;started=false;
+bird={x:80,y:240,v:0,g:0.5};pipes=[];score=0;fr=0;
+document.getElementById('s').textContent='Score: 0'},1500)}
+draw();
+<\/script></body></html>`
+  },
+
+  // ═══════════ 6. COLOR MATCH 🎨 (NEW!) ═══════════
+  {
+    id: "colormatch", name: "Color Match", emoji: "🎨", color: "#9b59b6",
+    desc: "Same color dhundo, jaldi se tap karo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(135deg,#667eea,#764ba2);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
+#s{font-size:24px;font-weight:bold;margin-bottom:20px}
+#target{width:100px;height:100px;border-radius:50%;margin-bottom:20px;box-shadow:0 8px 20px rgba(0,0,0,.3);border:4px solid #fff}
+#grid{display:grid;grid-template-columns:repeat(4,70px);gap:12px}
+.box{width:70px;height:70px;border-radius:12px;cursor:pointer;transition:transform .15s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.box:active{transform:scale(.9)}
+.box.correct{animation:flash .5s}
+.box.wrong{animation:shake .4s}
+@keyframes flash{50%{transform:scale(1.3);box-shadow:0 0 30px #fff}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.hint{margin-top:20px;font-size:14px;opacity:.8}
+</style></head><body>
+<div id="s">Score: 0</div>
+<div id="target"></div>
+<div id="grid"></div>
+<div class="hint">🎯 Target color ke box pe tap karo!</div>
+<script>
+var colors=['#E74C3C','#3498DB','#2ECC71','#F39C12','#9B59B6','#1ABC9C','#E67E22','#34495E'];
+var score=0,targetColor;
+function newRound(){
+var grid=document.getElementById('grid');grid.innerHTML='';
+targetColor=colors[Math.floor(Math.random()*colors.length)];
+document.getElementById('target').style.background=targetColor;
+var boxes=[];for(var i=0;i<16;i++){
+var c=Math.random()<.3?targetColor:colors[Math.floor(Math.random()*colors.length)];
+boxes.push(c)}
+if(!boxes.includes(targetColor))boxes[0]=targetColor;
+boxes.sort(function(){return Math.random()-.5});
+boxes.forEach(function(c){
+var b=document.createElement('div');b.className='box';b.style.background=c;
+b.onclick=function(){
+if(c===targetColor){score++;document.getElementById('s').textContent='Score: '+score;
+b.classList.add('correct');setTimeout(newRound,500)}
+else{b.classList.add('wrong');setTimeout(function(){b.classList.remove('wrong')},400)}};
+grid.appendChild(b)})}
+newRound();
+<\/script></body></html>`
+  },
+
+  // ═══════════ 7. MEMORY CARDS 🃏 (NEW!) ═══════════
+  {
+    id: "memory", name: "Memory Cards", emoji: "🃏", color: "#e67e22",
+    desc: "Matching pairs dhundo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(135deg,#f093fb,#f5576c);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
+#s{font-size:22px;font-weight:bold;margin-bottom:15px}
+#grid{display:grid;grid-template-columns:repeat(4,70px);gap:10px}
+.card{width:70px;height:70px;border-radius:10px;background:#2c3e50;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:32px;transition:transform .3s;transform-style:preserve-3d}
+.card.flipped{transform:rotateY(180deg);background:#ecf0f1}
+.card.matched{background:#2ecc71;cursor:default}
+.card span{transform:rotateY(180deg)}
+.hint{margin-top:15px;font-size:13px;opacity:.9}
+</style></head><body>
+<div id="s">Pairs: 0 / 8</div>
+<div id="grid"></div>
+<div class="hint">🧠 2 matching cards dhundo!</div>
+<script>
+var emojis=['🐶','🐱','🦊','🐸','🐵','🐼','🦁','🐯'];
+var cards=[],flipped=[],matched=0,locked=false;
+emojis.forEach(function(e){cards.push(e);cards.push(e)});
+cards.sort(function(){return Math.random()-.5});
+var grid=document.getElementById('grid');
+cards.forEach(function(e,i){
+var c=document.createElement('div');c.className='card';c.dataset.emoji=e;c.dataset.index=i;
+c.innerHTML='<span>'+e+'</span>';
+c.onclick=function(){
+if(locked||c.classList.contains('flipped')||c.classList.contains('matched'))return;
+c.classList.add('flipped');flipped.push(c);
+if(flipped.length===2){locked=true;
+if(flipped[0].dataset.emoji===flipped[1].dataset.emoji){
+setTimeout(function(){flipped[0].classList.add('matched');flipped[1].classList.add('matched');
+flipped=[];matched++;document.getElementById('s').textContent='Pairs: '+matched+' / 8';
+locked=false;
+if(matched===8)setTimeout(function(){matched=0;document.getElementById('s').textContent='Pairs: 0 / 8';
+grid.innerHTML='';init()},1500)},600)}
+else{setTimeout(function(){flipped[0].classList.remove('flipped');flipped[1].classList.remove('flipped');
+flipped=[];locked=false},1000)}}};
+grid.appendChild(c)});
+<\/script></body></html>`
+  },
+
+  // ═══════════ 8. REACTION TIME ⚡ (NEW!) ═══════════
+  {
+    id: "reaction", name: "Reaction Time", emoji: "⚡", color: "#1abc9c",
+    desc: "Color change hone par jaldi tap karo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:#2c3e50;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
+#s{font-size:22px;font-weight:bold;margin-bottom:20px}
+#box{width:250px;height:250px;border-radius:20px;background:#e74c3c;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;transition:background .3s;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+#box.green{background:#2ecc71}
+#box.waiting{background:#3498db}
+.hint{margin-top:20px;font-size:14px;opacity:.8}
+#best{margin-top:10px;font-size:16px;color:#f39c12}
+</style></head><body>
+<div id="s">Reaction Time Test</div>
+<div id="box">Tap to Start</div>
+<div class="hint">⚡ Green hone par jaldi tap karo!</div>
+<div id="best">Best: --</div>
+<script>
+var box=document.getElementById('box'),state='idle',startTime,best=Infinity,times=[];
+box.onclick=function(){
+if(state==='idle'){state='waiting';box.className='waiting';box.textContent='Wait for GREEN...';
+setTimeout(function(){if(state==='waiting'){state='ready';box.className='green';box.textContent='TAP NOW!';startTime=Date.now()}},1500+Math.random()*3000)}
+else if(state==='waiting'){state='idle';box.className='';box.textContent='Too early! Tap to retry'}
+else if(state==='ready'){var time=Date.now()-startTime;times.push(time);
+if(time<best)best=time;
+document.getElementById('best').textContent='Best: '+best+'ms';
+box.className='';box.textContent='Time: '+time+'ms | Tap to retry';state='idle'}};
+<\/script></body></html>`
+  },
+
+  // ═══════════ 9. TAP NUMBERS 🔢 (NEW!) ═══════════
+  {
+    id: "tapnum", name: "Tap Numbers", emoji: "🔢", color: "#e74c3c",
+    desc: "1 se 25 tak jaldi se tap karo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(135deg,#667eea,#764ba2);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
+#s{font-size:22px;font-weight:bold;margin-bottom:15px}
+#grid{display:grid;grid-template-columns:repeat(5,60px);gap:8px}
+.num{width:60px;height:60px;border-radius:10px;background:#fff;color:#333;font-size:24px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.num:active{transform:scale(.85)}
+.num.done{background:#2ecc71;color:#fff;cursor:default}
+#timer{margin-top:15px;font-size:18px;color:#f39c12}
+</style></head><body>
+<div id="s">Tap: 1 → Next: 1</div>
+<div id="grid"></div>
+<div id="timer">Time: 0s</div>
+<script>
+var nums=[],next=1,start=Date.now();
+for(var i=1;i<=25;i++)nums.push(i);
+nums.sort(function(){return Math.random()-.5});
+var grid=document.getElementById('grid');
+nums.forEach(function(n){
+var b=document.createElement('div');b.className='num';b.textContent=n;b.dataset.n=n;
+b.onclick=function(){
+if(+b.dataset.n===next){b.classList.add('done');next++;
+document.getElementById('s').textContent='Tap: '+next+' → Next: '+next;
+if(next>25){var time=((Date.now()-start)/1000).toFixed(2);
+document.getElementById('timer').textContent='Time: '+time+'s 🎉';
+setTimeout(function(){next=1;start=Date.now();
+document.getElementById('s').textContent='Tap: 1 → Next: 1';
+document.getElementById('timer').textContent='Time: 0s';
+grid.innerHTML='';nums.sort(function(){return Math.random()-.5});
+nums.forEach(function(n2){var b2=document.createElement('div');b2.className='num';b2.textContent=n2;b2.dataset.n=n2;
+b2.onclick=arguments.callee;grid.appendChild(b2)})},1500)}}};
+grid.appendChild(b)});
+setInterval(function(){
+if(next<=25)document.getElementById('timer').textContent='Time: '+((Date.now()-start)/1000).toFixed(1)+'s'},100);
+<\/script></body></html>`
+  },
+
+
+  // ═══════════ 10. NEON DASH 🚀 (NEW & ADDICTIVE) ═══════════
+  {
+    id: "neondash",
+    name: "Neon Dash",
+    emoji: "🚀",
+    color: "#00f2ff",
+    desc: "Asteroids se bacho, stars collect karo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><style>
+body{margin:0;background:#0a0a1a;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff;touch-action:none}
+#hud{position:absolute;top:15px;left:0;right:0;text-align:center;font-size:24px;font-weight:bold;color:#00f2ff;text-shadow:0 0 10px #00f2ff;z-index:10}
+canvas{background:radial-gradient(circle at 50% 100%,#1a1a3a,#0a0a1a);border-radius:12px;box-shadow:0 0 30px rgba(0,242,255,.2)}
+.hint{position:absolute;bottom:20px;color:#888;font-size:13px;font-weight:bold}
+</style></head><body>
+<div id="hud">Score: 0</div>
+<canvas id="c"></canvas>
+<div class="hint">👈 Swipe Left / Right 👉</div>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d');
+cv.width=340;cv.height=500;
+var player={x:170,y:420,w:40,h:40},obs=[],stars=[],score=0,dead=false,spd=3,frame=0;
+function drawPlayer(){
+  x.save();x.translate(player.x,player.y);
+  x.fillStyle='#00f2ff';x.shadowColor='#00f2ff';x.shadowBlur=15;
+  x.beginPath();x.moveTo(0,-20);x.lineTo(-15,20);x.lineTo(15,20);x.fill();
+  x.fillStyle='#ff9f43';x.shadowColor='#ff9f43';x.shadowBlur=10;
+  x.beginPath();x.moveTo(-8,20);x.lineTo(0,35+Math.random()*10);x.lineTo(8,20);x.fill();
+  x.restore();
+}
+function update(){
+  if(dead)return;frame++;
+  if(frame%40==0){obs.push({x:Math.random()*(cv.width-40)+20,y:-30,w:35,h:35})}
+  if(frame%60==0){stars.push({x:Math.random()*(cv.width-30)+15,y:-30,r:12})}
+  spd=3+Math.floor(score/10)*0.5;
+  obs.forEach(function(o){o.y+=spd});
+  stars.forEach(function(s){s.y+=spd*0.8});
+  obs=obs.filter(function(o){return o.y<cv.height+50});
+  stars=stars.filter(function(s){return s.y<cv.height+50});
+  // Collision
+  obs.forEach(function(o){
+    if(player.x-15<o.x+o.w/2 && player.x+15>o.x-o.w/2 && player.y-20<o.y+o.h/2 && player.y+20>o.y-o.h/2) die();
+  });
+  stars=stars.filter(function(s){
+    var dx=player.x-s.x,dy=player.y-s.y;
+    if(Math.sqrt(dx*dx+dy*dy)<30){score+=5;document.getElementById('hud').textContent='Score: '+score;return false}
+    return true;
+  });
+  score+=0.05;
+  document.getElementById('hud').textContent='Score: '+Math.floor(score);
+}
+function draw(){
+  x.clearRect(0,0,cv.width,cv.height);
+  obs.forEach(function(o){
+    x.fillStyle='#ff4757';x.shadowColor='#ff4757';x.shadowBlur=10;
+    x.beginPath();x.arc(o.x,o.y,o.w/2,0,7);x.fill();
+  });
+  stars.forEach(function(s){
+    x.fillStyle='#ffd32a';x.shadowColor='#ffd32a';x.shadowBlur=15;
+    x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill();
+  });
+  drawPlayer();
+  if(dead){
+    x.fillStyle='rgba(0,0,0,.8)';x.fillRect(0,0,cv.width,cv.height);
+    x.fillStyle='#ff4757';x.font='bold 32px sans-serif';x.textAlign='center';
+    x.fillText('CRASHED!',170,230);
+    x.fillStyle='#fff';x.font='18px sans-serif';
+    x.fillText('Score: '+Math.floor(score),170,270);
+    x.fillText('Tap to restart',170,310);
+  }
+}
+function loop(){update();draw();requestAnimationFrame(loop)}
+function die(){dead=true}
+cv.addEventListener('touchmove',function(e){
+  e.preventDefault();var t=e.touches[0].clientX;
+  var rect=cv.getBoundingClientRect();
+  player.x=t-rect.left;
+  if(player.x<20)player.x=20;if(player.x>cv.width-20)player.x=cv.width-20;
+},{passive:false});
+cv.addEventListener('mousemove',function(e){
+  var rect=cv.getBoundingClientRect();
+  player.x=e.clientX-rect.left;
+  if(player.x<20)player.x=20;if(player.x>cv.width-20)player.x=cv.width-20;
+});
+cv.addEventListener('click',function(){if(dead){dead=false;obs=[];stars=[];score=0;spd=3;frame=0}});
+loop();
+<\/script></body></html>`
+  },
+
+  // ═══════════ 11. MOLE SMASH 🔨 (FAST REFLEX) ═══════════
+  {
+    id: "molesmash",
+    name: "Mole Smash",
+    emoji: "🔨",
+    color: "#ff9f43",
+    desc: "Jaldi se moles ko tap karke phodo!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+body{margin:0;background:linear-gradient(135deg,#2d3436,#000000);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff}
+#hud{display:flex;justify-content:space-between;width:320px;margin-bottom:20px;font-size:20px;font-weight:bold}
+#hud span{color:#ff9f43}
+#grid{display:grid;grid-template-columns:repeat(3,90px);gap:15px}
+.hole{width:90px;height:90px;background:#1e272e;border-radius:50%;position:relative;overflow:hidden;cursor:pointer;border:3px solid #353b48;box-shadow:inset 0 10px 20px rgba(0,0,0,.8)}
+.mole{position:absolute;bottom:-80px;left:15px;width:60px;height:70px;background:#ff9f43;border-radius:40px 40px 10px 10px;transition:bottom .15s;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 5px 15px rgba(0,0,0,.5)}
+.mole.up{bottom:-10px}
+.mole.smashed{background:#ff4757;transform:scale(.9);transition:.1s}
+.hint{margin-top:25px;color:#b2bec3;font-size:14px;font-weight:bold}
+</style></head><body>
+<div id="hud"><div>Score: <span id="sc">0</span></div><div>Time: <span id="tm">60</span>s</div></div>
+<div id="grid">
+  <div class="hole" onclick="smash(0)"><div class="mole" id="m0">🐹</div></div>
+  <div class="hole" onclick="smash(1)"><div class="mole" id="m1">🐹</div></div>
+  <div class="hole" onclick="smash(2)"><div class="mole" id="m2">🐹</div></div>
+  <div class="hole" onclick="smash(3)"><div class="mole" id="m3">🐹</div></div>
+  <div class="hole" onclick="smash(4)"><div class="mole" id="m4">🐹</div></div>
+  <div class="hole" onclick="smash(5)"><div class="mole" id="m5">🐹</div></div>
+  <div class="hole" onclick="smash(6)"><div class="mole" id="m6">🐹</div></div>
+  <div class="hole" onclick="smash(7)"><div class="mole" id="m7">🐹</div></div>
+  <div class="hole" onclick="smash(8)"><div class="mole" id="m8">🐹</div></div>
+</div>
+<div class="hint">🔨 Mole upar aate hi tap karo!</div>
+<script>
+var score=0,timeLeft=60,activeMole=-1,gameOver=false;
+var popTimer,hideTimer;
+function randomHole(){
+  var id=Math.floor(Math.random()*9);
+  if(id===activeMole)return randomHole();
+  return id;
+}
+function pop(){
+  if(gameOver)return;
+  activeMole=randomHole();
+  var m=document.getElementById('m'+activeMole);
+  m.classList.add('up');m.classList.remove('smashed');m.textContent='🐹';
+  hideTimer=setTimeout(function(){
+    m.classList.remove('up');activeMole=-1;
+    if(!gameOver)popTimer=setTimeout(pop,600+Math.random()*800);
+  },900);
+}
+function smash(id){
+  if(gameOver||id!==activeMole)return;
+  var m=document.getElementById('m'+id);
+  m.classList.add('smashed');m.textContent='💥';
+  score+=10;document.getElementById('sc').textContent=score;
+  activeMole=-1;clearTimeout(hideTimer);
+  popTimer=setTimeout(pop,400);
+}
+var countdown=setInterval(function(){
+  timeLeft--;document.getElementById('tm').textContent=timeLeft;
+  if(timeLeft<=0){
+    clearInterval(countdown);clearTimeout(popTimer);clearTimeout(hideTimer);
+    gameOver=true;
+    document.querySelectorAll('.mole').forEach(function(m){m.classList.remove('up')});
+    setTimeout(function(){alert('⏰ Time Up! Final Score: '+score+'\\nTap OK to restart');location.reload()},300);
+  }
+},1000);
+pop();
+<\/script></body></html>`
+  },
+
+
+  // ═══════════ 12. SPACE SHOOTER 🛸 (ARCADE) ═══════════
+  {
+    id: "spaceshooter",
+    name: "Space Shooter",
+    emoji: "🛸",
+    color: "#8e44ad",
+    desc: "Aliens ko shoot karo, bachke unki goliyon se!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><style>
+body{margin:0;background:#000;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff;touch-action:none}
+#hud{position:absolute;top:15px;left:0;right:0;display:flex;justify-content:space-around;font-size:18px;font-weight:bold;color:#8e44ad;text-shadow:0 0 8px #8e44ad;z-index:10}
+canvas{background:radial-gradient(circle at 50% 30%,#1a0033,#000);border-radius:12px;box-shadow:0 0 30px rgba(142,68,173,.4)}
+.hint{position:absolute;bottom:15px;color:#888;font-size:12px}
+</style></head><body>
+<div id="hud"><div>Score: <span id="sc">0</span></div><div>Lives: <span id="lv">❤❤❤</span></div></div>
+<canvas id="c"></canvas>
+<div class="hint">👈 Move • Tap to SHOOT 👉</div>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d');
+cv.width=340;cv.height=520;
+var player={x:170,y:460,w:30,h:30},bullets=[],enemies=[],eBullets=[],stars=[];
+var score=0,lives=3,dead=false,frame=0,shootCD=0;
+for(var i=0;i<40;i++)stars.push({x:Math.random()*cv.width,y:Math.random()*cv.height,s:Math.random()*2+1});
+function shoot(){if(shootCD>0||dead)return;bullets.push({x:player.x,y:player.y-20,vy:-9});shootCD=12}
+function spawnEnemy(){
+  var boss=Math.random()<.12;
+  enemies.push({x:Math.random()*(cv.width-40)+20,y:-30,w:boss?45:30,h:boss?45:30,hp:boss?3:1,boss:boss,vy:boss?1:1.5+Math.random(),shootT:60+Math.random()*60});
+}
+function update(){
+  if(dead)return;frame++;shootCD--;
+  stars.forEach(function(s){s.y+=s.s;if(s.y>cv.height)s.y=0});
+  if(frame%55==0)spawnEnemy();
+  bullets.forEach(function(b){b.y+=b.vy});
+  enemies.forEach(function(e){
+    e.y+=e.vy;e.shootT--;
+    if(e.shootT<=0&&e.y>0&&e.y<cv.height-100){eBullets.push({x:e.x,y:e.y+e.h/2,vy:4});e.shootT=80+Math.random()*60}
+  });
+  eBullets.forEach(function(b){b.y+=b.vy});
+  bullets=bullets.filter(function(b){return b.y>-20});
+  enemies=enemies.filter(function(e){return e.y<cv.height+50});
+  eBullets=eBullets.filter(function(b){return b.y<cv.height+20});
+  // bullet vs enemy
+  for(var i=bullets.length-1;i>=0;i--){
+    for(var j=enemies.length-1;j>=0;j--){
+      var b=bullets[i],e=enemies[j];
+      if(b&&e&&Math.abs(b.x-e.x)<e.w/2&&Math.abs(b.y-e.y)<e.h/2){
+        bullets.splice(i,1);e.hp--;
+        if(e.hp<=0){score+=e.boss?50:10;enemies.splice(j,1);document.getElementById('sc').textContent=score}
+        break;
+      }
+    }
+  }
+  // enemy bullet vs player
+  for(var i=eBullets.length-1;i>=0;i--){
+    var b=eBullets[i];
+    if(Math.abs(b.x-player.x)<18&&Math.abs(b.y-player.y)<18){eBullets.splice(i,1);lives--;
+      document.getElementById('lv').textContent='❤'.repeat(Math.max(0,lives));
+      if(lives<=0)die();}
+  }
+  // enemy vs player
+  enemies.forEach(function(e){
+    if(Math.abs(e.x-player.x)<(e.w+player.w)/2&&Math.abs(e.y-player.y)<(e.h+player.h)/2){lives=0;
+      document.getElementById('lv').textContent='';die();}
+  });
+}
+function draw(){
+  x.clearRect(0,0,cv.width,cv.height);
+  stars.forEach(function(s){x.fillStyle='rgba(255,255,255,'+(s.s/3)+')';x.fillRect(s.x,s.y,2,2)});
+  // player
+  x.save();x.translate(player.x,player.y);
+  x.fillStyle='#8e44ad';x.shadowColor='#8e44ad';x.shadowBlur=15;
+  x.beginPath();x.moveTo(0,-18);x.lineTo(-16,15);x.lineTo(16,15);x.fill();
+  x.fillStyle='#f1c40f';x.fillRect(-3,-5,6,10);
+  x.restore();
+  // bullets
+  bullets.forEach(function(b){x.fillStyle='#f1c40f';x.shadowColor='#f1c40f';x.shadowBlur=10;x.fillRect(b.x-2,b.y-8,4,12)});
+  // enemies
+  enemies.forEach(function(e){
+    x.fillStyle=e.boss?'#e74c3c':'#2ecc71';x.shadowColor=x.fillStyle;x.shadowBlur=12;
+    x.beginPath();x.arc(e.x,e.y,e.w/2,0,7);x.fill();
+    x.fillStyle='#fff';x.beginPath();x.arc(e.x-7,e.y-4,3,0,7);x.arc(e.x+7,e.y-4,3,0,7);x.fill();
+    if(e.boss){x.fillStyle='#000';x.font='bold 10px sans-serif';x.textAlign='center';x.fillText('BOSS',e.x,e.y+18)}
+  });
+  // enemy bullets
+  eBullets.forEach(function(b){x.fillStyle='#ff4757';x.shadowColor='#ff4757';x.shadowBlur=8;x.beginPath();x.arc(b.x,b.y,4,0,7);x.fill()});
+  x.shadowBlur=0;
+  if(dead){
+    x.fillStyle='rgba(0,0,0,.85)';x.fillRect(0,0,cv.width,cv.height);
+    x.fillStyle='#e74c3c';x.font='bold 34px sans-serif';x.textAlign='center';
+    x.fillText('GAME OVER',170,240);
+    x.fillStyle='#fff';x.font='20px sans-serif';
+    x.fillText('Score: '+score,170,280);
+    x.font='14px sans-serif';x.fillText('Tap to restart',170,320);
+  }
+}
+function loop(){update();draw();requestAnimationFrame(loop)}
+function die(){dead=true}
+cv.addEventListener('touchmove',function(e){e.preventDefault();var t=e.touches[0];var r=cv.getBoundingClientRect();player.x=t.clientX-r.left;if(player.x<20)player.x=20;if(player.x>cv.width-20)player.width=cv.width-20},{passive:false});
+cv.addEventListener('mousemove',function(e){var r=cv.getBoundingClientRect();player.x=e.clientX-r.left;if(player.x<20)player.x=20;if(player.x>cv.width-20)player.x=cv.width-20});
+cv.addEventListener('touchstart',function(e){e.preventDefault();if(dead){dead=false;score=0;lives=3;enemies=[];eBullets=[];bullets=[];frame=0;player.x=170;document.getElementById('sc').textContent=0;document.getElementById('lv').textContent='❤❤❤'}else shoot()},{passive:false});
+cv.addEventListener('click',function(){if(dead){dead=false;score=0;lives=3;enemies=[];eBullets=[];bullets=[];frame=0;player.x=170;document.getElementById('sc').textContent=0;document.getElementById('lv').textContent='❤❤❤'}else shoot()});
+loop();
+<\/script></body></html>`
+  },
+
+  // ═══════════ 13. FRUIT SLICE 🍉 (SWIPE) ═══════════
+  {
+    id: "fruitslice",
+    name: "Fruit Slice",
+    emoji: "🍉",
+    color: "#e84393",
+    desc: "Fruits ko swipe karke slice karo, bombs se bacho!",
+    html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><style>
+body{margin:0;background:linear-gradient(135deg,#2c3e50,#1a1a2e);font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;color:#fff;touch-action:none}
+#hud{position:absolute;top:15px;left:0;right:0;display:flex;justify-content:space-around;font-size:18px;font-weight:bold;color:#e84393;text-shadow:0 0 8px #e84393;z-index:10}
+canvas{background:linear-gradient(180deg,#34495e,#2c3e50);border-radius:12px;box-shadow:0 0 30px rgba(232,67,147,.3)}
+.hint{position:absolute;bottom:15px;color:#95a5a6;font-size:12px}
+</style></head><body>
+<div id="hud"><div>Score: <span id="sc">0</span></div><div>Combo: <span id="cb">x1</span></div><div>Lives: <span id="lv">❤❤❤</span></div></div>
+<canvas id="c"></canvas>
+<div class="hint">👆 Swipe across fruits to slice!</div>
+<script>
+var cv=document.getElementById('c'),x=cv.getContext('2d');
+cv.width=340;cv.height=520;
+var fruits=[],slices=[],score=0,lives=3,combo=0,comboT=0,dead=false,frame=0;
+var fruitTypes=[{e:'🍉',p:10},{e:'🍊',p:10},{e:'🍎',p:10},{e:'🍌',p:15},{e:'🍇',p:15},{e:'🍓',p:20}];
+function spawn(){
+  var isBomb=Math.random()<.15;
+  var ft=isBomb?{e:'💣',p:-999}:fruitTypes[Math.floor(Math.random()*fruitTypes.length)];
+  fruits.push({x:Math.random()*(cv.width-80)+40,y:cv.height+30,vx:(Math.random()-.5)*4,vy:-11-Math.random()*3,r:28,type:ft,sliced:false,g:0.25,rot:0,vr:(Math.random()-.5)*.2});
+}
+function update(){
+  if(dead)return;frame++;comboT--;if(comboT<=0)combo=0;
+  document.getElementById('cb').textContent='x'+(combo+1);
+  if(frame%50==0)spawn();
+  fruits.forEach(function(f){
+    f.x+=f.vx;f.y+=f.vy;f.vy+=f.g;f.rot+=f.vr;
+    if(f.y>cv.height+60&&!f.sliced){
+      if(f.type.p>0){lives--;document.getElementById('lv').textContent='❤'.repeat(Math.max(0,lives));if(lives<=0)dead=true}
+      f.remove=true;
+    }
+  });
+  fruits=fruits.filter(function(f){return !f.remove});
+  slices.forEach(function(s){s.life--;s.x+=s.vx;s.y+=s.vy;s.vy+=.3});
+  slices=slices.filter(function(s){return s.life>0});
+}
+function draw(){
+  x.clearRect(0,0,cv.width,cv.height);
+  // slices
+  slices.forEach(function(s){
+    x.globalAlpha=s.life/30;x.font='28px sans-serif';x.textAlign='center';
+    x.fillText(s.e,s.x,s.y);
+    x.fillStyle='#f1c40f';x.font='bold 14px sans-serif';
+    x.fillText('+'+s.p,s.x,s.y+18);
+  });
+  x.globalAlpha=1;
+  // fruits
+  fruits.forEach(function(f){
+    x.save();x.translate(f.x,f.y);x.rotate(f.rot);
+    x.font='42px sans-serif';x.textAlign='center';x.textBaseline='middle';
+    x.fillText(f.type.e,0,0);
+    x.restore();
+  });
+  if(dead){
+    x.fillStyle='rgba(0,0,0,.85)';x.fillRect(0,0,cv.width,cv.height);
+    x.fillStyle='#e84393';x.font='bold 32px sans-serif';x.textAlign='center';
+    x.fillText('GAME OVER',170,230);
+    x.fillStyle='#fff';x.font='20px sans-serif';
+    x.fillText('Score: '+score,170,270);
+    x.font='14px sans-serif';x.fillText('Tap to restart',170,310);
+  }
+}
+function loop(){update();draw();requestAnimationFrame(loop)}
+function sliceAt(px,py){
+  if(dead)return;var hit=false;
+  fruits.forEach(function(f){
+    if(f.sliced)return;
+    var dx=px-f.x,dy=py-f.y;
+    if(Math.sqrt(dx*dx+dy*dy)<f.r+10){
+      f.sliced=true;f.remove=true;
+      if(f.type.p<0){lives=0;document.getElementById('lv').textContent='';dead=true;return}
+      combo++;comboT=40;
+      var pts=f.type.p*(combo+1);score+=pts;
+      document.getElementById('sc').textContent=score;
+      slices.push({x:f.x-15,y:f.y,vx:-2,vy:-2,e:f.type.e,p:pts,life:30});
+      slices.push({x:f.x+15,y:f.y,vx:2,vy:-2,e:f.type.e,p:0,life:30});
+      hit=true;
+    }
+  });
+}
+var lastP=null;
+function getPos(e){var r=cv.getBoundingClientRect();var t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
+cv.addEventListener('touchstart',function(e){e.preventDefault();if(dead){dead=false;score=0;lives=3;combo=0;fruits=[];slices=[];frame=0;document.getElementById('sc').textContent=0;document.getElementById('lv').textContent='❤❤❤';return}lastP=getPos(e)},{passive:false});
+cv.addEventListener('touchmove',function(e){e.preventDefault();var p=getPos(e);if(lastP){var dx=p.x-lastP.x,dy=p.y-lastP.y;if(Math.sqrt(dx*dx+dy*dy)>8){for(var t=0;t<=1;t+=.2){sliceAt(lastP.x+dx*t,lastP.y+dy*t)}}}lastP=p},{passive:false});
+cv.addEventListener('mousedown',function(e){if(dead){dead=false;score=0;lives=3;combo=0;fruits=[];slices=[];frame=0;document.getElementById('sc').textContent=0;document.getElementById('lv').textContent='❤❤❤';return}lastP=getPos(e)});
+cv.addEventListener('mousemove',function(e){if(!lastP||e.buttons!==1)return;var p=getPos(e);var dx=p.x-lastP.x,dy=p.y-lastP.y;if(Math.sqrt(dx*dx+dy*dy)>8){for(var t=0;t<=1;t+=.2){sliceAt(lastP.x+dx*t,lastP.y+dy*t)}}lastP=p});
+cv.addEventListener('mouseup',function(){lastP=null});
+loop();
+<\/script></body></html>`
+  }
+
+  // ═══════════ 14. STACK TOWER 🏗️ (TIMING) ═══════════
+
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // 🎮 NAYA GAME ADD KARNE KE LIYE YAHAN COMMA (,) LAGA KE OBJECT PASTE KARO:
+  // ═══════════════════════════════════════════════════════════════════════════════
+  /*
+  ,{
+    id: "newgame",
+    name: "Naya Game",
+    emoji: "🎯",
+    color: "#ff5e5b",
+    desc: "Game description",
+    html: `<!DOCTYPE html><html>...YAHAN PURA GAME CODE...</html>`
+  }
+  */
 ];
 
 /* ═══════════ SETTINGS ═══════════ */
-const RATE={coins:3,inr:2};        // 3 coins = ₹2
+const RATE={coins:3,inr:2};
 const REWARD=15;
 const TASK_REWARD=20;
 const SECONDS=60;
-const MIN_WD=500;                  // withdraw minimum — ₹500 (INR)
+const MIN_WD=500;
 const CHEAT_CODE='CHATQUIT*056';
 const CHEAT_REWARD=500;
-const LOCK_MS=2*24*60*60*1000;     // withdraw lock: 2 din
-const HELP_LOCK_MS=24*60*60*1000;  // helpline lock: 1 din
+const LOCK_MS=2*24*60*60*1000;
+const HELP_LOCK_MS=24*60*60*1000;
 
-/* ── SHARE ─ */
 const SHARE_LINK='https://mmkmoken.github.io/Earn_mon-o-y/';
 const WA_MSG='Ye ek earning platform hai jo aapko apne friend ne bheja hai 😊 Es ka use kar ke aap online money kama sakte hai 💰 Ye offer only September 5 tak hi valid hai ⏳ Use this and share! 👇\n'+SHARE_LINK;
 
@@ -686,6 +1539,7 @@ let timerInt=null,timeLeft=0,currentId=null,unlocked=false,toastT=null;
 let mode=null;
 let wdMethod='upi',wdInt=null,justWd=false;
 let helpOpt=0,helpBusy=false,helpInt=null;
+let puInt=null, popunderLoaded=false;
 const AC={c:null};
 
 function load(){
@@ -698,7 +1552,12 @@ function load(){
 }
 function save(){localStorage.setItem('appnaHouse',JSON.stringify(state))}
 function inrOf(c){return c*RATE.inr/RATE.coins}
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='screen-games') renderGames();
+  else if(id==='screen-tasks') renderTasks();
+}
 
 /* ---------- SOUND ---------- */
 function beep(f,dur,type,delay){
@@ -712,6 +1571,116 @@ const sndClick=()=>beep(420,.09,'square');
 const sndLocked=()=>beep(160,.22,'sawtooth');
 const sndDone=()=>{beep(520,.15);beep(780,.25,'sine',.16)};
 const sndClaim=()=>{beep(660,.12);beep(880,.12,'sine',.12);beep(1180,.22,'sine',.24)};
+
+/* ---------- NATIVE ADS (Safe Cloning - No Refresh) ---------- */
+function renderGames(){
+  const list = document.getElementById('gameList');
+  // If already rendered, ONLY update buttons (prevents DOM rebuild & ad refresh loop)
+  if (list.children.length > 0) {
+    GAMES.forEach((g, i) => {
+      const card = list.children[i * 2]; // card, then ad-slot
+      if (!card) return;
+      const btn = card.querySelector('button');
+      const ready = !!state.claimable[g.id];
+      if (ready && btn && btn.classList.contains('btn-play')) {
+        btn.className = 'btn-claim';
+        btn.textContent = '🎁 CLAIM ' + REWARD;
+        btn.setAttribute('onclick', "claim('" + g.id + "', this)");
+        card.classList.add('ready');
+      }
+    });
+    return;
+  }
+
+  // First time render
+  GAMES.forEach((g, i) => {
+    const ready = !!state.claimable[g.id];
+    const card = document.createElement('div');
+    card.className = 'game-card' + (ready ? ' ready' : '');
+    card.style.setProperty('--gc', g.color);
+    card.style.animationDelay = (i * 80) + 'ms';
+    card.innerHTML =
+      '<div class="gc-emoji" style="background:' + g.color + '22;border:1px solid ' + g.color + '55">' + g.emoji + '</div>' +
+      '<div class="gc-info"><h3>' + g.name + '</h3><p>' + (g.desc || '') + '</p>' +
+      '<div class="gc-meta">⏱ 1 min khelo • 🎁 +' + REWARD + ' coins</div></div>' +
+      (ready ? '<button class="btn-claim" onclick="claim(\'' + g.id + '\',this)">🎁 CLAIM ' + REWARD + '</button>'
+        : '<button class="btn-play" onclick="playGame(\'' + g.id + '\')">▶ PLAY</button>');
+    
+    list.appendChild(card);
+
+    // Ad target slot under each game
+    const adSlot = document.createElement('div');
+    adSlot.className = 'native-slot native-ad-target';
+    list.appendChild(adSlot);
+  });
+
+  cloneNativeAds();
+}
+
+function cloneNativeAds() {
+  setTimeout(() => {
+    const sourceContainer = document.getElementById('native-ad-source');
+    if (!sourceContainer) return;
+    
+    // Find the rendered ad (iframe or div injected by the network)
+    const adElement = sourceContainer.querySelector('iframe') || sourceContainer.querySelector('div');
+    
+    if (adElement && adElement.tagName !== 'SCRIPT') {
+      const targets = document.querySelectorAll('.native-ad-target');
+      targets.forEach(target => {
+        if (target.innerHTML.trim() === '') {
+          const clone = adElement.cloneNode(true);
+          target.appendChild(clone);
+        }
+      });
+    }
+  }, 3000); // 3 seconds to ensure ad network has rendered
+}
+
+/* ---------- POPUNDER 🚨 (Fixed - Loads Once) ---------- */
+function showPopunder(){
+  const modal = document.getElementById('popunder');
+  const timer = document.getElementById('puTimer');
+  const closeBtn = document.getElementById('puClose');
+  const label = document.getElementById('puLabel');
+  const adContent = document.getElementById('popunder-ad-content');
+  
+  modal.classList.add('show');
+  closeBtn.disabled = true;
+  timer.classList.remove('ready');
+  label.textContent = 'Sponsored Ad';
+  timer.textContent = '10';
+  
+  // Load script ONLY ONCE to prevent refresh loops
+  if (!popunderLoaded && adContent.children.length === 0) {
+    popunderLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://pl30844129.effectivecpmnetwork.com/c0/74/ab/c074ab1cb92ead15ec6a8e421857a78a.js';
+    script.async = true;
+    adContent.appendChild(script);
+  }
+  
+  let sec = 10;
+  clearInterval(window.puInt);
+  window.puInt = setInterval(() => {
+    sec--;
+    timer.textContent = sec;
+    if (sec <= 0) {
+      clearInterval(window.puInt);
+      closeBtn.disabled = false;
+      timer.classList.add('ready');
+      timer.textContent = '✓';
+      label.textContent = 'Ready to close';
+    }
+  }, 1000);
+}
+
+function closePopunder(){
+  const closeBtn = document.getElementById('puClose');
+  if (closeBtn.disabled) return;
+  document.getElementById('popunder').classList.remove('show');
+  clearInterval(window.puInt);
+}
 
 /* ---------- SHARE 📤 ---------- */
 function copyLink(btn){
@@ -760,23 +1729,7 @@ function flipBalance(){document.getElementById('balCard').classList.toggle('flip
 function goHome(){sndClick();refreshMoney();show('screen-home')}
 
 /* ---------- GAMES ZONE ---------- */
-function openGames(){sndClick();renderGames();show('screen-games')}
-function renderGames(){
-  const list=document.getElementById('gameList');list.innerHTML='';
-  GAMES.forEach((g,i)=>{
-    const ready=!!state.claimable[g.id];
-    const card=document.createElement('div');
-    card.className='game-card'+(ready?' ready':'');
-    card.style.setProperty('--gc',g.color);card.style.animationDelay=(i*80)+'ms';
-    card.innerHTML=
-      '<div class="gc-emoji" style="background:'+g.color+'22;border:1px solid '+g.color+'55">'+g.emoji+'</div>'+
-      '<div class="gc-info"><h3>'+g.name+'</h3><p>'+(g.desc||'')+'</p>'+
-      '<div class="gc-meta">⏱ 1 min khelo • 🎁 +'+REWARD+' coins</div></div>'+
-      (ready?'<button class="btn-claim" onclick="claim(\''+g.id+'\',this)">🎁 CLAIM '+REWARD+'</button>'
-            :'<button class="btn-play" onclick="playGame(\''+g.id+'\')">▶ PLAY</button>');
-    list.appendChild(card);
-  });
-}
+function openGames(){sndClick();show('screen-games')}
 function playGame(id){
   const g=GAMES.find(x=>x.id===id);if(!g)return;
   mode='timed';currentId=id;state.plays++;save();
@@ -816,7 +1769,7 @@ function exitGame(){
   const b=document.getElementById('backBtn');
   if(mode==='challenge'){
     document.getElementById('gameFrame').srcdoc='';mode=null;
-    sndClick();renderTasks();show('screen-tasks');return;
+    sndClick();show('screen-tasks');return;
   }
   if(!unlocked){
     sndLocked();toast('⏳ Pehle 1 minute pura karo, phir BACK milega! 😉');
@@ -828,7 +1781,7 @@ function exitGame(){
   if(currentId)state.claimable[currentId]=true;
   save();mode=null;
   document.getElementById('gameFrame').srcdoc='';
-  renderGames();show('screen-games');
+  show('screen-games');
   toast('🎁 Reward ready! CLAIM button dabao');
 }
 function claim(id,btn){
@@ -837,10 +1790,11 @@ function claim(id,btn){
   state.coins+=REWARD;state.earned+=REWARD;save();
   sndClaim();if(navigator.vibrate)navigator.vibrate(80);
   confetti(btn);coinFly(btn);
-  refreshMoney(true);renderGames();
+  refreshMoney(true);
   const chip=document.getElementById('chipBal');
   chip.classList.remove('bump');void chip.offsetWidth;chip.classList.add('bump');
   toast('🎉 +'+REWARD+' coins mil gaye! Balance updated 🪙');
+  setTimeout(showPopunder,900); // 🚨 Popunder trigger
 }
 
 /* ---------- TASKS ⚡ ---------- */
@@ -848,23 +1802,19 @@ const TASKS=[
   {id:'car',emoji:'🏎️',name:'Car Rush Challenge',desc:'Game me 50 coins collect karo — hard hai!',color:'#ff5e5b'},
   {id:'quiz',emoji:'🧠',name:'College Quiz',desc:'2 sawaalon ke sahi jawab do',color:'#ffc42e'}
 ];
-function openTasks(){sndClick();refreshMoney();renderTasks();showTaskPanel('list');show('screen-tasks')}
+function openTasks(){sndClick();refreshMoney();buildTasks();renderTasks();showTaskPanel('list');show('screen-tasks')}
 function closeTasks(){sndClick();goHome()}
 function showTaskPanel(p){
   document.getElementById('taskListWrap').style.display=p==='list'?'':'none';
   document.getElementById('quizWrap').style.display=p==='quiz'?'':'none';
 }
-function renderTasks(){
-  const doneN=['car','quiz'].filter(k=>state.tasks[k]).length;
-  document.getElementById('taskProg').textContent=doneN+' / 2';
-  document.getElementById('taskBar').style.width=(doneN/2*100)+'%';
-  document.getElementById('taskChip').textContent=state.coins;
-  const list=document.getElementById('taskList');list.innerHTML='';
-  let shown=0;
+function buildTasks(){
+  const list=document.getElementById('taskList');
+  if(list.children.length>0) return;
   TASKS.forEach((t,i)=>{
-    if(state.tasks[t.id])return;
-    shown++;
-    const c=document.createElement('div');c.className='game-card';
+    const c=document.createElement('div');
+    c.id='task-card-'+t.id;
+    c.className='game-card';
     c.style.setProperty('--gc',t.color);c.style.animationDelay=(i*80)+'ms';
     const act=t.id==='car'?'startCarChallenge()':'openQuiz()';
     const txt=t.id==='car'?'🏁 GO':'START ➜';
@@ -874,6 +1824,19 @@ function renderTasks(){
       '<button class="btn-start" onclick="'+act+'">'+txt+'</button>';
     list.appendChild(c);
   });
+}
+function renderTasks(){
+  const doneN=['car','quiz'].filter(k=>state.tasks[k]).length;
+  document.getElementById('taskProg').textContent=doneN+' / 2';
+  document.getElementById('taskBar').style.width=(doneN/2*100)+'%';
+  document.getElementById('taskChip').textContent=state.coins;
+  
+  TASKS.forEach(t=>{
+    const card=document.getElementById('task-card-'+t.id);
+    if(card) card.style.display=state.tasks[t.id]?'none':'flex';
+  });
+  
+  const shown=TASKS.filter(t=>!state.tasks[t.id]).length;
   document.getElementById('taskEmpty').style.display=shown?'none':'grid';
 }
 function awardTask(key,btn,msg){
@@ -881,6 +1844,7 @@ function awardTask(key,btn,msg){
   sndClaim();if(navigator.vibrate)navigator.vibrate(80);
   if(btn)confetti(btn);
   refreshMoney(true);toast(msg);
+  setTimeout(showPopunder,900); // 🚨 Popunder trigger
 }
 function openQuiz(){showTaskPanel('quiz');renderQuiz()}
 function renderQuiz(){
@@ -971,7 +1935,7 @@ function renderWithdraw(){
   document.getElementById('wdForm').style.display=locked?'none':'';
   document.getElementById('wdLocked').style.display=locked?'':'none';
   if(locked){
-    document.getElementById('wdLockIco').textContent=justWd?'🎉':'';
+    document.getElementById('wdLockIco').textContent=justWd?'🎉':'🔒';
     document.getElementById('wdLockTitle').textContent=justWd?'REQUEST SENT!':'WITHDRAW LOCKED';
     const lw=state.lastWd;
     document.getElementById('wdAmtLine').innerHTML=lw?
@@ -998,25 +1962,18 @@ function doWithdraw(btn){
   const amtEl=document.getElementById('amtIn');
   if(state.wdLock>Date.now()){sndLocked();toast('🔒 Abhi lock hai! Baad me try karo');return}
   const inrVal=Math.floor(inrOf(state.coins));
-  if(inrVal<MIN_WD){sndLocked();
-    toast('⚠️ Kam se kam ₹'+MIN_WD+' balance chahiye! Abhi: ₹'+inrVal);return}
+  if(inrVal<MIN_WD){sndLocked();toast('⚠️ Kam se kam ₹'+MIN_WD+' balance chahiye! Abhi: ₹'+inrVal);return}
   let v;
   if(wdMethod==='upi'){
     v=document.getElementById('upiIn').value.trim();
-    if(!/^[\w.\-]{2,}@[a-zA-Z][\w\-]*$/.test(v)){
-      toast('❌ Sahi UPI ID likho (jaise: naam@upi)');
-      errEl(document.getElementById('upiIn'));sndLocked();return}
+    if(!/^[\w.\-]{2,}@[a-zA-Z][\w\-]*$/.test(v)){toast('❌ Sahi UPI ID likho (jaise: naam@upi)');errEl(document.getElementById('upiIn'));sndLocked();return}
   }else{
     v=document.getElementById('phoneIn').value.trim();
-    if(!/^[6-9]\d{9}$/.test(v)){
-      toast('❌ Sahi 10-digit mobile number dalo');
-      errEl(document.getElementById('phoneIn'));sndLocked();return}
+    if(!/^[6-9]\d{9}$/.test(v)){toast('❌ Sahi 10-digit mobile number dalo');errEl(document.getElementById('phoneIn'));sndLocked();return}
   }
   const amt=Math.floor(+amtEl.value);
-  if(!amt||amt<MIN_WD){sndLocked();
-    toast('⚠️ Kam se kam ₹'+MIN_WD+' withdraw kar sakte ho');errEl(amtEl);return}
-  if(amt>inrVal){sndLocked();
-    toast('⚠️ Itna balance nahi! Max ₹'+inrVal+' nikal sakte ho');errEl(amtEl);return}
+  if(!amt||amt<MIN_WD){sndLocked();toast('⚠️ Kam se kam ₹'+MIN_WD+' withdraw kar sakte ho');errEl(amtEl);return}
+  if(amt>inrVal){sndLocked();toast('⚠️ Itna balance nahi! Max ₹'+inrVal+' nikal sakte ho');errEl(amtEl);return}
   const cut=Math.ceil(amt*RATE.coins/RATE.inr);
   state.coins-=cut;
   state.wdLock=Date.now()+LOCK_MS;
@@ -1026,6 +1983,7 @@ function doWithdraw(btn){
   amtEl.value='';
   renderWithdraw();refreshMoney(true);
   toast('🎉 ₹'+amt+' request sent! '+cut+' 🪙 balance se cut ho gaye');
+  setTimeout(showPopunder,900); // 🚨 Popunder trigger
 }
 function errEl(el){el.classList.add('err');setTimeout(()=>el.classList.remove('err'),500)}
 
@@ -1108,6 +2066,7 @@ function sendHelp(btn){
     state.lastHelp={o:HELP_OPTS[helpOpt],t:Date.now()};
     save();sndClaim();renderHelp();
     toast('✅ Problem posted! Jald solve hoga 🤝');
+    setTimeout(showPopunder,900); // 🚨 Popunder trigger
   },wait);
 }
 
